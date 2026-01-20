@@ -45,13 +45,30 @@ export function setupBot() {
           rawData: msg,
         });
 
-        // 3. Simple Echo Response (for now)
+        // 3. Simple Response Logic
         if (msg.text) {
-            if (msg.text.startsWith('/start')) {
-                await bot?.sendMessage(msg.chat.id, "Salom! Men sizning botingizman. (Hello! I am your bot.)");
-            } else {
-                await bot?.sendMessage(msg.chat.id, `Siz yozdingiz: ${msg.text}`);
-            }
+          const chatId = msg.chat.id;
+
+          if (msg.text.startsWith('/start')) {
+            await bot?.sendMessage(chatId, "Salom! Men sizning botingizman. Quyidagi menudan birini tanlang:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "📊 Statistika" }, { text: "❓ Yordam" }],
+                  [{ text: "📝 Xabar qoldirish" }]
+                ],
+                resize_keyboard: true
+              }
+            });
+          } else if (msg.text === "📊 Statistika") {
+            const usersCount = (await storage.getUsers()).length;
+            await bot?.sendMessage(chatId, `Botimizdan foydalanuvchilar soni: ${usersCount} ta`);
+          } else if (msg.text === "❓ Yordam") {
+            await bot?.sendMessage(chatId, "Bu bot orqali siz biz bilan bog'lanishingiz va xabarlaringizni qoldirishingiz mumkin.");
+          } else if (msg.text === "📝 Xabar qoldirish") {
+            await bot?.sendMessage(chatId, "Iltimos, xabaringizni yozing. Biz uni albatta ko'rib chiqamiz.");
+          } else {
+            await bot?.sendMessage(chatId, `Siz yozdingiz: ${msg.text}`);
+          }
         }
 
       } catch (error) {
