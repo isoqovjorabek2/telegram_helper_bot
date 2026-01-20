@@ -141,7 +141,38 @@ Quyidagi menudan birini tanlang:`;
               }
             }
           } else if (msg.text === "📚 Psixologlar Katalogi") {
-            await currentBot.sendMessage(chatId, "Hozirda bizning katalogimizda malakali ayol psixologlar mavjud. Ro'yxatni shakllantirishimiz uchun kuting.");
+            await currentBot.sendMessage(chatId, "Quyidagi yo'nalishlardan birini tanlang:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "💑 Munosabatlar bo'yicha psixolog" }, { text: "👶 Bolalar Psixologi" }],
+                  [{ text: "🎨 Art Terapevt" }, { text: "🧘 Yoga Trener" }],
+                  [{ text: "🚀 Kouch" }],
+                  [{ text: "🔙 Orqaga" }]
+                ],
+                resize_keyboard: true
+              }
+            });
+          } else if (msg.text === "💑 Munosabatlar bo'yicha psixolog") {
+            await currentBot.sendMessage(chatId, "Munosabatlar bo'yicha mutaxassislar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+          } else if (msg.text === "👶 Bolalar Psixologi") {
+            await currentBot.sendMessage(chatId, "Bolalar psixologlari ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+          } else if (msg.text === "🎨 Art Terapevt") {
+            await currentBot.sendMessage(chatId, "Art terapevtlar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+          } else if (msg.text === "🧘 Yoga Trener") {
+            await currentBot.sendMessage(chatId, "Yoga trenerlari ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+          } else if (msg.text === "🚀 Kouch") {
+            await currentBot.sendMessage(chatId, "Kouchlar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+          } else if (msg.text === "🔙 Orqaga") {
+            await currentBot.sendMessage(chatId, "Asosiy menu:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
+                  [{ text: "ℹ️ Biz haqimizda" }, { text: "👨‍💻 Admin bilan bog'lanish" }],
+                  [{ text: "🎓 Bepul Darslar" }]
+                ],
+                resize_keyboard: true
+              }
+            });
           } else if (msg.text === "ℹ️ Biz haqimizda") {
             await currentBot.sendMessage(chatId, "Bizning loyihamiz ayollarga ruhiy salomatlik yo'lida yordam berishni maqsad qilgan.");
           } else if (msg.text === "👨‍💻 Admin bilan bog'lanish") {
