@@ -152,8 +152,19 @@ Quyidagi menudan birini tanlang:`;
                 resize_keyboard: true
               }
             });
-          } else if (msg.text === "💑 Munosabatlar bo'yicha psixolog") {
-            await currentBot.sendMessage(chatId, "Munosabatlar bo'yicha mutaxassislar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+          } else if (msg.text === "💑 Munosabatlar bo'yicha psixolog" || msg.text === "🎨 Art Terapevt") {
+            const caption = `👤 **Suyunova Muhayyo**\n📍 Amaliy psixolog\n\nMen 2 yildan ortiq vaqt davomida onlayn va offlayn ko‘rinishda psixologik konsultatsiyalar olib borib, ayollarning ichki holatini tiklash, oilaviy muammolardan chiqish va o‘ziga bo‘lgan ishonchni shakllantirishda yordam beraman.\n\n📌 **Men yordam beradigan holatlar:**\n💔 Ayollikni yo‘qotish, o‘zini qadrsiz his qilish\n❤️ Eri yoki qaynonasi bilan emotsional tushunmovchiliklar\n👨‍👩‍👧 Ota-ona bilan bolalikdan qolgan ichki og‘riqlar\n💸 Moliyaviy bloklar va pul bilan bog‘liq psixologik cheklovlar\n😔 Stress, ichki bosim va ruhiy charchoq\n🔢 O‘z yo‘lini topishda sonlar orqali yo‘nalish aniqlash\n\n🎯 **Ish uslublarim:**\n✅ Art-terapiya\n✅ Mak-karta orqali ichki holatni ochish\n✅ Neyrografika yordamida hissiyotlarni bo‘shatish\n✅ Meditatsiya va amaliy mashqlar\n\n🌷 **Shiorim:**\n“Har bir ayol ichida kuch bor — men uni uyg‘onishiga yordam beraman.”`;
+            
+            try {
+              // Using local file path for Replit environment
+              await currentBot.sendPhoto(chatId, "./client/public/images/muhayyo.jpg", {
+                caption: caption,
+                parse_mode: 'Markdown'
+              });
+            } catch (err) {
+              console.error("Error sending photo:", err);
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown' });
+            }
           } else if (msg.text === "👶 Bolalar Psixologi") {
             await currentBot.sendMessage(chatId, "Bolalar psixologlari ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
           } else if (msg.text === "🎨 Art Terapevt") {
