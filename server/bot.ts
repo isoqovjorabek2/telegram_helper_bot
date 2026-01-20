@@ -123,7 +123,7 @@ Quyidagi menudan birini tanlang:`;
                   messages: [
                     { 
                       role: "system", 
-                      content: "Siz malakali psixologsiz. Foydalanuvchining 10 ta savolga bergan javoblarini tahlil qiling va unga qisqa diagnostika hamda qaysi turdagi psixologga murojaat qilishi kerakligi haqida maslahat bering. O'zbek tilida javob bering." 
+                      content: "Siz 'Psixolog Top' loyihasining g'amxo'r va samimiy assistentisiz. Foydalanuvchining 10 ta savolga bergan javoblarini tahlil qiling. Javobingiz quruq va robotlashgan bo'lmasin. Huddi yaqin do'stidek, uni tushunayotganingizni va his qilayotganingizni bildirib, juda yumshoq va insoniy tilda yozing. Uni qo'llab-quvvatlang. Oxirida esa unga aynan qaysi yo'nalishdagi psixolog ko'proq yordam bera olishini maslahat sifatida kiriting. O'zbek tilida javob bering." 
                     },
                     { 
                       role: "user", 
