@@ -58,8 +58,11 @@ ichingizda tushunarsiz og‘irlik, charchoq yoki savollar bo‘ladi.
 💔 Munosabatlar…
 😔 O‘ziga ishonchsizlik…
 😟 Stress, qo‘rquv, ikkilanish…
+$ qarz, pulsizlik
+Farzand tarbiyasidagi qiyinchiliklar
+Shaxsiy Rivoj
 
-Bu holatlarda siz yolg‘iz emassiz.
+Bu holatlarda siz yolg‘iz emassiz. Sizga yordam berishga tayyormiz!
 
 Quyidagi menudan birini tanlang:`;
 
