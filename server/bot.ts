@@ -50,22 +50,26 @@ export function setupBot() {
           const chatId = msg.chat.id;
 
           if (msg.text.startsWith('/start')) {
-            await bot?.sendMessage(chatId, "Salom! Men sizning botingizman. Quyidagi menudan birini tanlang:", {
+            await bot?.sendMessage(chatId, "Salom! Ayollarga psixologik yordam ko'rsatish botiga xush kelibsiz. Quyidagi menudan birini tanlang:", {
               reply_markup: {
                 keyboard: [
-                  [{ text: "📊 Statistika" }, { text: "❓ Yordam" }],
-                  [{ text: "📝 Xabar qoldirish" }]
+                  [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
+                  [{ text: "ℹ️ Biz haqimizda" }, { text: "👨‍💻 Admin bilan bog'lanish" }],
+                  [{ text: "🎓 Bepul Darslar" }]
                 ],
                 resize_keyboard: true
               }
             });
-          } else if (msg.text === "📊 Statistika") {
-            const usersCount = (await storage.getUsers()).length;
-            await bot?.sendMessage(chatId, `Botimizdan foydalanuvchilar soni: ${usersCount} ta`);
-          } else if (msg.text === "❓ Yordam") {
-            await bot?.sendMessage(chatId, "Bu bot orqali siz biz bilan bog'lanishingiz va xabarlaringizni qoldirishingiz mumkin.");
-          } else if (msg.text === "📝 Xabar qoldirish") {
-            await bot?.sendMessage(chatId, "Iltimos, xabaringizni yozing. Biz uni albatta ko'rib chiqamiz.");
+          } else if (msg.text === "📝 Bepul Diagnostika") {
+            await bot?.sendMessage(chatId, "Diagnostika bo'limi tez kunda ishga tushadi. Iltimos, kutib qoling.");
+          } else if (msg.text === "📚 Psixologlar Katalogi") {
+            await bot?.sendMessage(chatId, "Hozirda bizning katalogimizda malakali ayol psixologlar mavjud. Ro'yxatni shakllantirishimiz uchun kuting.");
+          } else if (msg.text === "ℹ️ Biz haqimizda") {
+            await bot?.sendMessage(chatId, "Bizning loyihamiz ayollarga ruhiy salomatlik yo'lida yordam berishni maqsad qilgan.");
+          } else if (msg.text === "👨‍💻 Admin bilan bog'lanish") {
+            await bot?.sendMessage(chatId, "Admin bilan bog'lanish uchun: @admin_username");
+          } else if (msg.text === "🎓 Bepul Darslar") {
+            await bot?.sendMessage(chatId, "Bepul darslarimiz ro'yxati yaqin orada taqdim etiladi.");
           } else {
             await bot?.sendMessage(chatId, `Siz yozdingiz: ${msg.text}`);
           }
