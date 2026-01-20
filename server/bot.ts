@@ -20,12 +20,19 @@ const DIAGNOSTIC_QUESTIONS = [
   "Psixologdan qanday yordam kutayotgan edingiz?"
 ];
 
+let bot: TelegramBot | null = null;
+
 export function setupBot() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
 
   if (!token) {
     console.warn("TELEGRAM_BOT_TOKEN is not set. Bot will not start.");
     return null;
+  }
+
+  if (bot) {
+    console.log("Bot already running, skipping initialization.");
+    return bot;
   }
 
   try {
