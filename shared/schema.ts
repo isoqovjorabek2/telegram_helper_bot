@@ -10,6 +10,7 @@ export const users = pgTable("users", {
   lastName: text("last_name"),
   isBot: boolean("is_bot").default(false),
   languageCode: text("language_code"),
+  testState: jsonb("test_state"), // { currentQuestion: number, answers: string[], isComplete: boolean }
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -18,7 +19,7 @@ export const messages = pgTable("messages", {
   userId: integer("user_id").references(() => users.id),
   messageId: integer("message_id").notNull(),
   content: text("content"),
-  rawData: jsonb("raw_data"), // Store full message object for debugging
+  rawData: jsonb("raw_data"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

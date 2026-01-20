@@ -1,11 +1,24 @@
 import TelegramBot from "node-telegram-bot-api";
 import { storage } from "./storage";
+import OpenAI from "openai";
 
-// Using polling for development. For production, webhooks are better but require SSL and a public domain.
-// Replit URLs are public and have SSL, so webhooks are possible, but polling is easier to setup without
-// domain verification issues during dev.
+const openai = new OpenAI({
+  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
+  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+});
 
-let bot: TelegramBot | null = null;
+const DIAGNOSTIC_QUESTIONS = [
+  "Oxirgi vaqtda o'zingizni qanday his qilyapsiz? (Umumiy holatingiz)",
+  "Uyqungizda o'zgarishlar bormi? (Uyqusizlik yoki ko'p uxlash)",
+  "Ishtahangiz qanday? (O'zgarishlar bormi?)",
+  "Yaqinlaringiz bilan munosabatlaringiz sizni qoniqtiradimi?",
+  "O'zingizga bo'lgan ishonchingiz darajasini qanday baholaysiz?",
+  "Tez-tez tashvish yoki qo'rquv his qilasizmi?",
+  "Kelajakka bo'lgan qarashingiz qanday? (Umidli yoki umidsiz)",
+  "Kunlik ishlaringizga kuchingiz yetyaptimi? (Horg'inlik bormi?)",
+  "Sizni eng ko'p nima bezovta qilyapti?",
+  "Psixologdan qanday yordam kutayotgan edingiz?"
+];
 
 export function setupBot() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -21,6 +34,9 @@ export function setupBot() {
 
     bot.on("message", async (msg) => {
       try {
+        const currentBot = bot;
+        if (!currentBot) return;
+
         const telegramId = msg.from?.id.toString();
         if (!telegramId) return;
 
@@ -66,7 +82,7 @@ Bu holatlarda siz yolg‘iz emassiz. Sizga yordam berishga tayyormiz!
 
 Quyidagi menudan birini tanlang:`;
 
-            await bot?.sendMessage(chatId, onboardingText, {
+            await currentBot.sendMessage(chatId, onboardingText, {
               reply_markup: {
                 keyboard: [
                   [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
@@ -77,17 +93,56 @@ Quyidagi menudan birini tanlang:`;
               }
             });
           } else if (msg.text === "📝 Bepul Diagnostika") {
-            await bot?.sendMessage(chatId, "Diagnostika bo'limi tez kunda ishga tushadi. Iltimos, kutib qoling.");
+            await storage.updateUser(user.id, { 
+              testState: { currentQuestion: 0, answers: [], isComplete: false } 
+            });
+            await currentBot.sendMessage(chatId, "Keling, 10 ta savol orqali holatingizni aniqlaymiz.\n\n1-savol: " + DIAGNOSTIC_QUESTIONS[0]);
+          } else if (user.testState && typeof user.testState === 'object' && !(user.testState as any).isComplete) {
+            const state = user.testState as { currentQuestion: number, answers: string[], isComplete: boolean };
+            state.answers.push(msg.text || "");
+            state.currentQuestion++;
+
+            if (state.currentQuestion < DIAGNOSTIC_QUESTIONS.length) {
+              await storage.updateUser(user.id, { testState: state });
+              await currentBot.sendMessage(chatId, `${state.currentQuestion + 1}-savol: ${DIAGNOSTIC_QUESTIONS[state.currentQuestion]}`);
+            } else {
+              state.isComplete = true;
+              await storage.updateUser(user.id, { testState: state });
+              await currentBot.sendMessage(chatId, "Rahmat! AI tahlil qilmoqda, iltimos kuting...");
+
+              try {
+                const response = await openai.chat.completions.create({
+                  model: "gpt-4o",
+                  messages: [
+                    { 
+                      role: "system", 
+                      content: "Siz malakali psixologsiz. Foydalanuvchining 10 ta savolga bergan javoblarini tahlil qiling va unga qisqa diagnostika hamda qaysi turdagi psixologga murojaat qilishi kerakligi haqida maslahat bering. O'zbek tilida javob bering." 
+                    },
+                    { 
+                      role: "user", 
+                      content: state.answers.map((a, i) => `${i+1}. ${DIAGNOSTIC_QUESTIONS[i]}: ${a}`).join("\n") 
+                    }
+                  ]
+                });
+
+                const diagnosis = response.choices[0].message.content;
+                await currentBot.sendMessage(chatId, "📊 Diagnostika natijasi:\n\n" + diagnosis);
+                await currentBot.sendMessage(chatId, "\nSizga mos psixologni topish uchun '📚 Psixologlar Katalogi' bo'limiga o'tishingiz mumkin.");
+              } catch (err) {
+                console.error("AI Error:", err);
+                await currentBot.sendMessage(chatId, "Kechirasiz, tahlil qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
+              }
+            }
           } else if (msg.text === "📚 Psixologlar Katalogi") {
-            await bot?.sendMessage(chatId, "Hozirda bizning katalogimizda malakali ayol psixologlar mavjud. Ro'yxatni shakllantirishimiz uchun kuting.");
+            await currentBot.sendMessage(chatId, "Hozirda bizning katalogimizda malakali ayol psixologlar mavjud. Ro'yxatni shakllantirishimiz uchun kuting.");
           } else if (msg.text === "ℹ️ Biz haqimizda") {
-            await bot?.sendMessage(chatId, "Bizning loyihamiz ayollarga ruhiy salomatlik yo'lida yordam berishni maqsad qilgan.");
+            await currentBot.sendMessage(chatId, "Bizning loyihamiz ayollarga ruhiy salomatlik yo'lida yordam berishni maqsad qilgan.");
           } else if (msg.text === "👨‍💻 Admin bilan bog'lanish") {
-            await bot?.sendMessage(chatId, "Admin bilan bog'lanish uchun: @admin_username");
+            await currentBot.sendMessage(chatId, "Admin bilan bog'lanish uchun: @admin_username");
           } else if (msg.text === "🎓 Bepul Darslar") {
-            await bot?.sendMessage(chatId, "Bepul darslarimiz ro'yxati yaqin orada taqdim etiladi.");
+            await currentBot.sendMessage(chatId, "Bepul darslarimiz ro'yxati yaqin orada taqdim etiladi.");
           } else {
-            await bot?.sendMessage(chatId, `Siz yozdingiz: ${msg.text}`);
+            await currentBot.sendMessage(chatId, `Siz yozdingiz: ${msg.text}`);
           }
         }
 

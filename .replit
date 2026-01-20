@@ -42,3 +42,6 @@ waitForPort = 5000
 
 [userenv.shared]
 TELEGRAM_BOT_TOKEN = "8541694297:AAH3qoIF3QIyuRRyQgwb8GVN0AaiQAX_Cts"
+
+[agent]
+integrations = ["javascript_openai_ai_integrations:2.0.0"]
