@@ -50,7 +50,20 @@ export function setupBot() {
           const chatId = msg.chat.id;
 
           if (msg.text.startsWith('/start')) {
-            await bot?.sendMessage(chatId, "Salom! Ayollarga psixologik yordam ko'rsatish botiga xush kelibsiz. Quyidagi menudan birini tanlang:", {
+            const onboardingText = `🌿 Psixolog Top’ga xush kelibsiz!
+
+Ba’zan hayotda hammasi joyida ko‘ringan bo‘lsa ham,
+ichingizda tushunarsiz og‘irlik, charchoq yoki savollar bo‘ladi.
+
+💔 Munosabatlar…
+😔 O‘ziga ishonchsizlik…
+😟 Stress, qo‘rquv, ikkilanish…
+
+Bu holatlarda siz yolg‘iz emassiz.
+
+Quyidagi menudan birini tanlang:`;
+
+            await bot?.sendMessage(chatId, onboardingText, {
               reply_markup: {
                 keyboard: [
                   [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
