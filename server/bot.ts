@@ -215,7 +215,14 @@ Quyidagi menudan birini tanlang:`;
           } else if (msg.text === "ℹ️ Biz haqimizda") {
             await currentBot.sendMessage(chatId, "🌿 **'Psixolog Top' - Ayollar uchun ko'mak va qo'llab-quvvatlash markazi**\n\nBizning maqsadimiz — har bir ayolning ruhiy salomatligini asrash va unga kerakli mutaxassisni topishga ko'maklashish. \n\n✨ **Biz nimalarni taklif qilamiz?**\n✅ Bepul AI-diagnostika tizimi\n✅ Malakali psixologlar va kouchlar katalogi\n✅ Foydali darslar va amaliy mashqlar\n\nSiz yolg'iz emassiz. Biz sizga o'zingizni kashf etishingizda yordam beramiz.", { parse_mode: 'Markdown' });
           } else if (msg.text === "👨‍💻 Admin bilan bog'lanish") {
-            await currentBot.sendMessage(chatId, "Savollar va takliflar bo'yicha bizning adminimiz bilan bog'laning:\n\n👉 @Feruza_PsixologTop\n\nBiz har qanday murojaatga javob berishga tayyormiz.", { parse_mode: 'Markdown' });
+            await currentBot.sendMessage(chatId, "Savollar va takliflar bo'yicha bizning adminimiz bilan bog'laning:\n\n👉 @Feruza_PsixologTop\n\nBiz har qanday murojaatga javob berishga tayyormiz.", { 
+              parse_mode: 'Markdown',
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]
+                ]
+              }
+            });
           } else if (msg.text === "🎓 Bepul Darslar") {
             await currentBot.sendMessage(chatId, "🎓 **Bepul bilimlar va darslar bo'limi**\n\nHozirda quyidagi darslarimiz mavjud:\n\n1️⃣ **'O'zingni sevish sirlari'** — 3 kunlik marafon\n2️⃣ **'Stressdan chiqish mashqlari'** — Video dars\n3️⃣ **'Ayollik energiyasini uyg'otish'** — Amaliy qo'llanma\n\nDarslarni boshlash uchun admin bilan bog'laning yoki yangiliklarimizni kuzatib boring!", { parse_mode: 'Markdown' });
           } else {
