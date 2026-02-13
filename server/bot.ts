@@ -175,17 +175,23 @@ Quyidagi menudan birini tanlang:`;
               }
             });
           } else if (msg.text === "💑 Munosabatlar bo'yicha psixolog" || msg.text === "🎨 Art Terapevt") {
-            const caption = `👤 **Suyunova Muhayyo**\n📍 Amaliy psixolog\n\nMen 2 yildan ortiq vaqt davomida onlayn va offlayn ko‘rinishda psixologik konsultatsiyalar olib borib, ayollarning ichki holatini tiklash, oilaviy muammolardan chiqish va o‘ziga bo‘lgan ishonchni shakllantirishda yordam beraman.\n\n📌 **Men yordam beradigan holatlar:**\n💔 Ayollikni yo‘qotish, o‘zini qadrsiz his qilish\n❤️ Eri yoki qaynonasi bilan emotsional tushunmovchiliklar\n👨‍👩‍👧 Ota-ona bilan bolalikdan qolgan ichki og‘riqlar\n💸 Moliyaviy bloklar va pul bilan bog‘liq psixologik cheklovlar\n😔 Stress, ichki bosim va ruhiy charchoq\n🔢 O‘z yo‘lini topishda sonlar orqali yo‘nalish aniqlash\n\n🎯 **Ish uslublarim:**\n✅ Art-terapiya\n✅ Mak-karta orqali ichki holatni ochish\n✅ Neyrografika yordamida hissiyotlarni bo‘shatish\n✅ Meditatsiya va amaliy mashqlar\n\n🌷 **Shiorim:**\n“Har bir ayol ichida kuch bor — men uni uyg‘onishiga yordam beraman.”`;
+            const muhayyoCaption = `👤 **Suyunova Muhayyo**\n📍 Amaliy psixolog\n\nMen 2 yildan ortiq vaqt davomida onlayn va offlayn ko‘rinishda psixologik konsultatsiyalar olib borib, ayollarning ichki holatini tiklash, oilaviy muammolardan chiqish va o‘ziga bo‘lgan ishonchni shakllantirishda yordam beraman.\n\n📌 **Men yordam beradigan holatlar:**\n💔 Ayollikni yo‘qotish, o‘zini qadrsiz his qilish\n❤️ Eri yoki qaynonasi bilan emotsional tushunmovchiliklar\n👨‍👩‍👧 Ota-ona bilan bolalikdan qolgan ichki og‘riqlar\n💸 Moliyaviy bloklar va pul bilan bog‘liq psixologik cheklovlar\n😔 Stress, ichki bosim va ruhiy charchoq\n🔢 O‘z yo‘lini topishda sonlar orqali yo‘nalish aniqlash\n\n🎯 **Ish uslublarim:**\n✅ Art-terapiya\n✅ Mak-karta orqali ichki holatni ochish\n✅ Neyrografika yordamida hissiyotlarni bo‘shatish\n✅ Meditatsiya va amaliy mashqlar\n\n🌷 **Shiorim:**\n“Har bir ayol ichida kuch bor — men uni uyg‘onishiga yordam beraman.”`;
             
+            const sevaraCaption = `👤 **Erkinova Sevara Najmiddin qizi**\n📍 Amaliy psixolog | EMU University o’qituvchisi\n\nMen insonni stressdan asabiylikdan chiqarishda, ayollikni his etishda, o’ziga ishonchni oshirishda, ota-ona, turmusho’rtoq hamda farzand bilan munosabatlarni yaxshilashda amaliy ko’mak beraman.\n\n📚 **Faoliyat va tajriba:**\n1) 6 yillik nazariy tajriba.\n2) 3 yildan ortiq amaliy tajriba.\n3) Shaxsiy konsultatsiyalar, trening va art-terapiya.\n\n🎯 **Asosiy yo’nalishlar:**\nShaxsiy o‘sish | Oila psixologiyasi | Stress boshqarish | Motivatsiya | Art-terapiya | Neyrografika\n\n🌷 **Shaxsiy shior:**\n“Hech narsa shunchaki bo’lmaydi, hamma narsada hikmat bor va bu hikmatni ko’rishda yordam beraman.”`;
+
             try {
-              // Using local file path for Replit environment
               await currentBot.sendPhoto(chatId, "./client/public/images/muhayyo.jpg", {
-                caption: caption,
+                caption: muhayyoCaption,
+                parse_mode: 'Markdown'
+              });
+              await currentBot.sendPhoto(chatId, "./client/public/images/sevara.jpg", {
+                caption: sevaraCaption,
                 parse_mode: 'Markdown'
               });
             } catch (err) {
-              console.error("Error sending photo:", err);
-              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown' });
+              console.error("Error sending photos:", err);
+              await currentBot.sendMessage(chatId, muhayyoCaption, { parse_mode: 'Markdown' });
+              await currentBot.sendMessage(chatId, sevaraCaption, { parse_mode: 'Markdown' });
             }
           } else if (msg.text === "👶 Bolalar Psixologi") {
             await currentBot.sendMessage(chatId, "Bolalar psixologlari ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
