@@ -219,7 +219,7 @@ Quyidagi menudan birini tanlang:`;
               parse_mode: 'Markdown',
               reply_markup: {
                 inline_keyboard: [
-                  [{ text: "💬 Admin bilan bog'lanish", url: "tg://resolve?domain=Feruza_PsixologTop" }]
+                  [{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]
                 ]
               }
             });
