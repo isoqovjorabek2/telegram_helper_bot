@@ -198,7 +198,17 @@ Quyidagi menudan birini tanlang:`;
           } else if (msg.text === "🎨 Art Terapevt") {
             await currentBot.sendMessage(chatId, "Art terapevtlar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
           } else if (msg.text === "🧘 Yoga Trener") {
-            await currentBot.sendMessage(chatId, "Yoga trenerlari ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+            const yogaCaption = `🧘 **Yoga va Meditatsiya bo'yicha mutaxassis**\n\n📜 **Ma'lumoti va tajribasi:**\n1) Heartfulness meditatsiyasi bo'yicha sertifikatlangan trener.\n2) IHYTP RYT-200 xalqaro yoga va meditatsiya instruktori.\n3) Yogaschool YTTC-100 o'qituvchilar kursini tamomlagan.\n4) Yoga Federation: Perinatal yoga (homiladorlar uchun yoga) mutaxassisi.\n\n🇮🇳 Hindistondagi **Kanha Shanti Vanam** ashramida tahsil olgan va o'sha yerda malaka oshirgan. Ko'plab sayyor retreitlar tashkilotchisi.\n\n✨ **Yo'nalishlar:**\n✅ Kattalar uchun yoga\n✅ Bolalar uchun yoga\n✅ Meditatsiya amaliyotlari\n✅ Homiladorlar uchun maxsus yoga`;
+            
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/yoga_instructor.png", {
+                caption: yogaCaption,
+                parse_mode: 'Markdown'
+              });
+            } catch (err) {
+              console.error("Error sending photo:", err);
+              await currentBot.sendMessage(chatId, yogaCaption, { parse_mode: 'Markdown' });
+            }
           } else if (msg.text === "🚀 Kouch") {
             await currentBot.sendMessage(chatId, "Kouchlar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
           } else if (msg.text === "🔙 Orqaga") {
