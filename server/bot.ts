@@ -103,7 +103,9 @@ Quyidagi menudan birini tanlang:`;
             await storage.updateUser(user.id, { 
               testState: { currentQuestion: 0, answers: [], isComplete: false } 
             });
-            await currentBot.sendMessage(chatId, "Keling, 10 ta savol orqali holatingizni aniqlaymiz.\n\n1-savol: " + DIAGNOSTIC_QUESTIONS[0]);
+            await currentBot.sendMessage(chatId, "Keling, 10 ta savol orqali holatingizni aniqlaymiz.\n\n1-savol: " + DIAGNOSTIC_QUESTIONS[0], {
+              reply_markup: { remove_keyboard: true }
+            });
           } else if (user.testState && typeof user.testState === 'object' && !(user.testState as any).isComplete) {
             const state = user.testState as { currentQuestion: number, answers: string[], isComplete: boolean };
             state.answers.push(msg.text || "");
@@ -134,7 +136,16 @@ Quyidagi menudan birini tanlang:`;
 
                 const diagnosis = response.choices[0].message.content;
                 await currentBot.sendMessage(chatId, "📊 Diagnostika natijasi:\n\n" + diagnosis);
-                await currentBot.sendMessage(chatId, "\nSizga mos psixologni topish uchun '📚 Psixologlar Katalogi' bo'limiga o'tishingiz mumkin.");
+                await currentBot.sendMessage(chatId, "\nSizga mos psixologni topish uchun '📚 Psixologlar Katalogi' bo'limiga o'tishingiz mumkin.", {
+                  reply_markup: {
+                    keyboard: [
+                      [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
+                      [{ text: "ℹ️ Biz haqimizda" }, { text: "👨‍💻 Admin bilan bog'lanish" }],
+                      [{ text: "🎓 Bepul Darslar" }]
+                    ],
+                    resize_keyboard: true
+                  }
+                });
               } catch (err) {
                 console.error("AI Error:", err);
                 await currentBot.sendMessage(chatId, "Kechirasiz, tahlil qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
