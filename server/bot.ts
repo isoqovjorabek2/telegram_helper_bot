@@ -194,7 +194,17 @@ Quyidagi menudan birini tanlang:`;
               await currentBot.sendMessage(chatId, sevaraCaption, { parse_mode: 'Markdown' });
             }
           } else if (msg.text === "👶 Bolalar Psixologi") {
-            await currentBot.sendMessage(chatId, "Bolalar psixologlari ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+            const fotimaCaption = `👤 **Umarova Fotima Rixsiboyevna**\n📍 Oliy ma’lumotli psixolog | Oila va bolalar psixologi | Lirik-logoped\n\nMen bolalardagi rivojlanish kechikishlari (ZPR, ZRR, RAS, Autizm) va duduqlanish onaning ruhiy holatiga bog'liqligini ko'rsatib beraman. Ona bilan ishlab, farzandning holati yaxshilanishiga yordam beraman.\n\n🏆 **Yutuq va tajriba:**\n✅ 13 yillik logopedik tajriba\n✅ 3 yillik amaliy psixologik tajriba\n✅ "Yilning eng malakali logopedi" nominatsiyasi g'olibi\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nPsichoanaliz | Oila va bolalar psixologiyasi | Nutq chiqarish | Duduqlanishni davolash | Neyrografika | Kouching\n\n🌟 **Maqsadim:**\nJamiyatimizda sog'lom avlod ko'payishiga va insonlarning baxtli yashashiga sababchi bo'lish.`;
+
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/fotima.jpg", {
+                caption: fotimaCaption,
+                parse_mode: 'Markdown'
+              });
+            } catch (err) {
+              console.error("Error sending photo:", err);
+              await currentBot.sendMessage(chatId, fotimaCaption, { parse_mode: 'Markdown' });
+            }
           } else if (msg.text === "🎨 Art Terapevt") {
             await currentBot.sendMessage(chatId, "Art terapevtlar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
           } else if (msg.text === "🧘 Yoga Trener") {
