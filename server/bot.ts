@@ -107,51 +107,62 @@ Quyidagi menudan birini tanlang:`;
               reply_markup: { remove_keyboard: true }
             });
           } else if (user.testState && typeof user.testState === 'object' && !(user.testState as any).isComplete) {
-            const state = user.testState as { currentQuestion: number, answers: string[], isComplete: boolean };
-            state.answers.push(msg.text || "");
-            state.currentQuestion++;
-
-            if (state.currentQuestion < DIAGNOSTIC_QUESTIONS.length) {
-              await storage.updateUser(user.id, { testState: state });
-              await currentBot.sendMessage(chatId, `${state.currentQuestion + 1}-savol: ${DIAGNOSTIC_QUESTIONS[state.currentQuestion]}`);
+            // Check if user is trying to use main menu buttons during diagnostic
+            const menuButtons = ["📝 Bepul Diagnostika", "📚 Psixologlar Katalogi", "ℹ️ Biz haqimizda", "👨‍💻 Admin bilan bog'lanish", "🎓 Bepul Darslar"];
+            if (menuButtons.includes(msg.text || "")) {
+              // Reset state and handle as new command
+              await storage.updateUser(user.id, { testState: null });
             } else {
-              state.isComplete = true;
-              await storage.updateUser(user.id, { testState: state });
-              await currentBot.sendMessage(chatId, "Rahmat! AI tahlil qilmoqda, iltimos kuting...");
+              const state = user.testState as { currentQuestion: number, answers: string[], isComplete: boolean };
+              state.answers.push(msg.text || "");
+              state.currentQuestion++;
 
-              try {
-                const response = await openai.chat.completions.create({
-                  model: "gpt-4o",
-                  messages: [
-                    { 
-                      role: "system", 
-                      content: "Siz 'Psixolog Top' loyihasining g'amxo'r va samimiy assistentisiz. Foydalanuvchining 10 ta savolga bergan javoblarini tahlil qiling. Javobingiz quruq va robotlashgan bo'lmasin. Huddi yaqin do'stidek, uni tushunayotganingizni va his qilayotganingizni bildirib, juda yumshoq va insoniy tilda yozing. Uni qo'llab-quvvatlang. Oxirida esa unga aynan qaysi yo'nalishdagi psixolog ko'proq yordam bera olishini maslahat sifatida kiriting. O'zbek tilida javob bering." 
-                    },
-                    { 
-                      role: "user", 
-                      content: state.answers.map((a, i) => `${i+1}. ${DIAGNOSTIC_QUESTIONS[i]}: ${a}`).join("\n") 
+              if (state.currentQuestion < DIAGNOSTIC_QUESTIONS.length) {
+                await storage.updateUser(user.id, { testState: state });
+                await currentBot.sendMessage(chatId, `${state.currentQuestion + 1}-savol: ${DIAGNOSTIC_QUESTIONS[state.currentQuestion]}`);
+                return; // Prevent further processing
+              } else {
+                state.isComplete = true;
+                await storage.updateUser(user.id, { testState: state });
+                await currentBot.sendMessage(chatId, "Rahmat! AI tahlil qilmoqda, iltimos kuting...");
+
+                try {
+                  const response = await openai.chat.completions.create({
+                    model: "gpt-4o",
+                    messages: [
+                      { 
+                        role: "system", 
+                        content: "Siz 'Psixolog Top' loyihasining g'amxo'r va samimiy assistentisiz. Foydalanuvchining 10 ta savolga bergan javoblarini tahlil qiling. Javobingiz quruq va robotlashgan bo'lmasin. Huddi yaqin do'stidek, uni tushunayotganingizni va his qilayotganingizni bildirib, juda yumshoq va insoniy tilda yozing. Uni qo'llab-quvvatlang. Oxirida esa unga aynan qaysi yo'nalishdagi psixolog ko'proq yordam bera olishini maslahat sifatida kiriting. O'zbek tilida javob bering." 
+                      },
+                      { 
+                        role: "user", 
+                        content: state.answers.map((a, i) => `${i+1}. ${DIAGNOSTIC_QUESTIONS[i]}: ${a}`).join("\n") 
+                      }
+                    ]
+                  });
+
+                  const diagnosis = response.choices[0].message.content;
+                  await currentBot.sendMessage(chatId, "📊 Diagnostika natijasi:\n\n" + diagnosis);
+                  await currentBot.sendMessage(chatId, "\nSizga mos psixologni topish uchun '📚 Psixologlar Katalogi' bo'limiga o'tishingiz mumkin.", {
+                    reply_markup: {
+                      keyboard: [
+                        [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
+                        [{ text: "ℹ️ Biz haqimizda" }, { text: "👨‍💻 Admin bilan bog'lanish" }],
+                        [{ text: "🎓 Bepul Darslar" }]
+                      ],
+                      resize_keyboard: true
                     }
-                  ]
-                });
-
-                const diagnosis = response.choices[0].message.content;
-                await currentBot.sendMessage(chatId, "📊 Diagnostika natijasi:\n\n" + diagnosis);
-                await currentBot.sendMessage(chatId, "\nSizga mos psixologni topish uchun '📚 Psixologlar Katalogi' bo'limiga o'tishingiz mumkin.", {
-                  reply_markup: {
-                    keyboard: [
-                      [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
-                      [{ text: "ℹ️ Biz haqimizda" }, { text: "👨‍💻 Admin bilan bog'lanish" }],
-                      [{ text: "🎓 Bepul Darslar" }]
-                    ],
-                    resize_keyboard: true
-                  }
-                });
-              } catch (err) {
-                console.error("AI Error:", err);
-                await currentBot.sendMessage(chatId, "Kechirasiz, tahlil qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
+                  });
+                } catch (err) {
+                  console.error("AI Error:", err);
+                  await currentBot.sendMessage(chatId, "Kechirasiz, tahlil qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
+                }
+                return; // Prevent further processing
               }
             }
-          } else if (msg.text === "📚 Psixologlar Katalogi") {
+          }
+
+          if (msg.text === "📚 Psixologlar Katalogi") {
             await currentBot.sendMessage(chatId, "Quyidagi yo'nalishlardan birini tanlang:", {
               reply_markup: {
                 keyboard: [
