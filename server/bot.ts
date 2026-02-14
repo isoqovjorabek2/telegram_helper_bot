@@ -187,12 +187,27 @@ Quyidagi menudan birini tanlang:`;
 
                   const diagnosis = response.choices[0].message.content;
                   await currentBot.sendMessage(chatId, "📊 Diagnostika natijasi:\n\n" + diagnosis);
-                  await currentBot.sendMessage(chatId, "\nSizga mos psixologni topish uchun '📚 Psixologlar Katalogi' bo'limiga o'tishingiz mumkin.", {
+
+                  // Extract recommended category from AI response or logic
+                  let recommendedCategory = "💑 Munosabatlar bo'yicha psixolog"; // Default
+                  const lowerDiagnosis = diagnosis?.toLowerCase() || "";
+                  if (lowerDiagnosis.includes("bolalar") || lowerDiagnosis.includes("farzand")) {
+                    recommendedCategory = "👶 Bolalar Psixologi";
+                  } else if (lowerDiagnosis.includes("art") || lowerDiagnosis.includes("ijod")) {
+                    recommendedCategory = "🎨 Art Terapevt";
+                  } else if (lowerDiagnosis.includes("yoga") || lowerDiagnosis.includes("meditatsiya") || lowerDiagnosis.includes("tana")) {
+                    recommendedCategory = "🧘 Yoga Trener";
+                  } else if (lowerDiagnosis.includes("kouch") || lowerDiagnosis.includes("maqsad") || lowerDiagnosis.includes("muvaffaqiyat")) {
+                    recommendedCategory = "🚀 Kouch";
+                  }
+
+                  await currentBot.sendMessage(chatId, `\nSizning holatingizdan kelib chiqib, biz sizga **'${recommendedCategory}'** yo'nalishidagi mutaxassis bilan bog'lanishni maslahat beramiz.`, {
+                    parse_mode: 'Markdown',
                     reply_markup: {
                       keyboard: [
-                        [{ text: "📝 Bepul Diagnostika" }, { text: "📚 Psixologlar Katalogi" }],
-                        [{ text: "ℹ️ Biz haqimizda" }, { text: "👨‍💻 Admin bilan bog'lanish" }],
-                        [{ text: "🎓 Bepul Darslar" }]
+                        [{ text: recommendedCategory }],
+                        [{ text: "📚 Psixologlar Katalogi" }],
+                        [{ text: "🔙 Orqaga" }]
                       ],
                       resize_keyboard: true
                     }
