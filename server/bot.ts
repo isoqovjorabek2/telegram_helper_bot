@@ -496,7 +496,8 @@ export function setupBot() {
               await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
           } else {
-            await currentBot.sendMessage(chatId, lang === 'ru' ? `Вы написали: ${msg.text}` : `Siz yozdingiz: ${msg.text}`);
+            // bot yana bergan komandani qayta uzimizga yuborish bilan band - Removed this echo behavior
+            // await currentBot.sendMessage(chatId, lang === 'ru' ? `Вы написали: ${msg.text}` : `Siz yozdingiz: ${msg.text}`);
           }
         }
 
