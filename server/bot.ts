@@ -179,6 +179,8 @@ Quyidagi menudan birini tanlang:`;
             
             const sevaraCaption = `👤 **Erkinova Sevara Najmiddin qizi**\n📍 Amaliy psixolog | EMU University o’qituvchisi\n\nMen insonni stressdan asabiylikdan chiqarishda, ayollikni his etishda, o’ziga ishonchni oshirishda, ota-ona, turmusho’rtoq hamda farzand bilan munosabatlarni yaxshilashda amaliy ko’mak beraman.\n\n📚 **Faoliyat va tajriba:**\n1) 6 yillik nazariy tajriba.\n2) 3 yildan ortiq amaliy tajriba.\n3) Shaxsiy konsultatsiyalar, trening va art-terapiya.\n\n🎯 **Asosiy yo’nalishlar:**\nShaxsiy o‘sish | Oila psixologiyasi | Stress boshqarish | Motivatsiya | Art-terapiya | Neyrografika\n\n🌷 **Shaxsiy shior:**\n“Hech narsa shunchaki bo’lmaydi, hamma narsada hikmat bor va bu hikmatni ko’rishda yordam beraman.”`;
 
+            const muxlisaCaption = `👤 **Azimova Muxlisa Baxtiyor qizi**\n📍 Pedagog Psixolog\n\nMen insonlarning o'ziga bo'lgan ishonchini mustahkamlashda, stressda, xotirjamlikni barqarorlashtirishda, muammolarga art-terapiya (chizgilar) yordamida yechim topishda yordam beraman.\n\n📚 **Faoliyat va tajriba:**\n✅ 4 yillik nazariy bilim\n✅ 2 yillik amaliy tajriba\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nArt terapiya | Munosabatlar | Mandala terapiya | Oila Psixologiyasi | Neyrografika | Moliyaviy rivoj | Ayollik energiyasi\n\n🌟 **Shaxsiy Shior:**\n“Hozir yoki hech qachon!!! Har bir kichik qadam katta maqsadlar sari yo'l ochadi..!!”`;
+
             try {
               await currentBot.sendPhoto(chatId, "./client/public/images/muhayyo.jpg", {
                 caption: muhayyoCaption,
@@ -188,10 +190,15 @@ Quyidagi menudan birini tanlang:`;
                 caption: sevaraCaption,
                 parse_mode: 'Markdown'
               });
+              await currentBot.sendPhoto(chatId, "./client/public/images/muxlisa.jpg", {
+                caption: muxlisaCaption,
+                parse_mode: 'Markdown'
+              });
             } catch (err) {
               console.error("Error sending photos:", err);
               await currentBot.sendMessage(chatId, muhayyoCaption, { parse_mode: 'Markdown' });
               await currentBot.sendMessage(chatId, sevaraCaption, { parse_mode: 'Markdown' });
+              await currentBot.sendMessage(chatId, muxlisaCaption, { parse_mode: 'Markdown' });
             }
           } else if (msg.text === "👶 Bolalar Psixologi") {
             const fotimaCaption = `👤 **Umarova Fotima Rixsiboyevna**\n📍 Oliy ma’lumotli psixolog | Oila va bolalar psixologi | Lirik-logoped\n\nMen bolalardagi rivojlanish kechikishlari (ZPR, ZRR, RAS, Autizm) va duduqlanish onaning ruhiy holatiga bog'liqligini ko'rsatib beraman. Ona bilan ishlab, farzandning holati yaxshilanishiga yordam beraman.\n\n🏆 **Yutuq va tajriba:**\n✅ 13 yillik logopedik tajriba\n✅ 3 yillik amaliy psixologik tajriba\n✅ "Yilning eng malakali logopedi" nominatsiyasi g'olibi\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nPsichoanaliz | Oila va bolalar psixologiyasi | Nutq chiqarish | Duduqlanishni davolash | Neyrografika | Kouching\n\n🌟 **Maqsadim:**\nJamiyatimizda sog'lom avlod ko'payishiga va insonlarning baxtli yashashiga sababchi bo'lish.`;
