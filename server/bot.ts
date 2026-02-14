@@ -8,16 +8,46 @@ const openai = new OpenAI({
 });
 
 const DIAGNOSTIC_QUESTIONS = [
-  "Oxirgi vaqtda o'zingizni qanday his qilyapsiz? (Umumiy holatingiz)",
-  "Uyqungizda o'zgarishlar bormi? (Uyqusizlik yoki ko'p uxlash)",
-  "Ishtahangiz qanday? (O'zgarishlar bormi?)",
-  "Yaqinlaringiz bilan munosabatlaringiz sizni qoniqtiradimi?",
-  "O'zingizga bo'lgan ishonchingiz darajasini qanday baholaysiz?",
-  "Tez-tez tashvish yoki qo'rquv his qilasizmi?",
-  "Kelajakka bo'lgan qarashingiz qanday? (Umidli yoki umidsiz)",
-  "Kunlik ishlaringizga kuchingiz yetyaptimi? (Horg'inlik bormi?)",
-  "Sizni eng ko'p nima bezovta qilyapti?",
-  "Psixologdan qanday yordam kutayotgan edingiz?"
+  {
+    question: "Oxirgi vaqtda o'zingizni qanday his qilyapsiz? (Umumiy holatingiz)",
+    options: ["Yaxshi, quvvatga to'laman", "O'rtacha, charchoq bor", "Yomon, tushkunlikdaman", "Juda yomon, holsizman"]
+  },
+  {
+    question: "Uyqungizda o'zgarishlar bormi? (Uyqusizlik yoki ko'p uxlash)",
+    options: ["Hammasi joyida", "Uyqusizlik qiynayapti", "Ko'p uxlayapman", "Uyqum notinch"]
+  },
+  {
+    question: "Ishtahangiz qanday? (O'zgarishlar bormi?)",
+    options: ["O'zgarmagan", "Ishtaham yo'qolgan", "Haddan tashqari ko'p yeyapman", "Ishtaham tez-tez o'zgarib turibdi"]
+  },
+  {
+    question: "Yaqinlaringiz bilan munosabatlaringiz sizni qoniqtiradimi?",
+    options: ["Ha, juda yaxshi", "Qisman qoniqtiradi", "Ko'p tushunmovchiliklar bor", "Munosabatlarimiz sovuqlashgan"]
+  },
+  {
+    question: "O'zingizga bo'lgan ishonchingiz darajasini qanday baholaysiz?",
+    options: ["Juda yuqori", "O'rtacha", "Past", "O'zimga mutlaqo ishonmayman"]
+  },
+  {
+    question: "Tez-tez tashvish yoki qo'rquv his qilasizmi?",
+    options: ["Yo'q, deyarli his qilmayman", "Ba'zida bo'lib turadi", "Tez-tez tashvishlanaman", "Doimiy qo'rquv ostidaman"]
+  },
+  {
+    question: "Kelajakka bo'lgan qarashingiz qanday? (Umidli yoki umidsiz)",
+    options: ["Juda umidli va ijobiy", "O'rtacha, rejalari bor", "Biroz xavotirliman", "Umuman umidim yo'q"]
+  },
+  {
+    question: "Kunlik ishlaringizga kuchingiz yetyaptimi? (Horg'inlik bormi?)",
+    options: ["Ha, hammasiga ulguryapman", "Biroz charchoq bor", "Tez horg'inlikni his qilyapman", "Hech narsaga kuchim yetmayapti"]
+  },
+  {
+    question: "Sizni eng ko'p nima bezovta qilyapti?",
+    options: ["Munosabatlar", "Moliyaviy muammolar", "Sog'liq yoki tushkunlik", "O'z yo'limni topolmaslik"]
+  },
+  {
+    question: "Psixologdan qanday yordam kutayotgan edingiz?",
+    options: ["Maslahat va yo'nalish", "Shunchaki tinglashlarini", "Muammoni ildizi bilan hal qilishni", "Ichki xotirjamlikni topishni"]
+  }
 ];
 
 let bot: TelegramBot | null = null;
@@ -103,8 +133,13 @@ Quyidagi menudan birini tanlang:`;
             await storage.updateUser(user.id, { 
               testState: { currentQuestion: 0, answers: [], isComplete: false } 
             });
-            await currentBot.sendMessage(chatId, "Keling, 10 ta savol orqali holatingizni aniqlaymiz.\n\n1-savol: " + DIAGNOSTIC_QUESTIONS[0], {
-              reply_markup: { remove_keyboard: true }
+            const firstQ = DIAGNOSTIC_QUESTIONS[0];
+            await currentBot.sendMessage(chatId, "Keling, 10 ta savol orqali holatingizni aniqlaymiz.\n\n1-savol: " + firstQ.question, {
+              reply_markup: {
+                keyboard: firstQ.options.map(opt => [{ text: opt }]),
+                resize_keyboard: true,
+                one_time_keyboard: true
+              }
             });
           } else if (user.testState && typeof user.testState === 'object' && !(user.testState as any).isComplete) {
             // Check if user is trying to use main menu buttons during diagnostic
@@ -119,12 +154,21 @@ Quyidagi menudan birini tanlang:`;
 
               if (state.currentQuestion < DIAGNOSTIC_QUESTIONS.length) {
                 await storage.updateUser(user.id, { testState: state });
-                await currentBot.sendMessage(chatId, `${state.currentQuestion + 1}-savol: ${DIAGNOSTIC_QUESTIONS[state.currentQuestion]}`);
+                const nextQ = DIAGNOSTIC_QUESTIONS[state.currentQuestion];
+                await currentBot.sendMessage(chatId, `${state.currentQuestion + 1}-savol: ${nextQ.question}`, {
+                  reply_markup: {
+                    keyboard: nextQ.options.map(opt => [{ text: opt }]),
+                    resize_keyboard: true,
+                    one_time_keyboard: true
+                  }
+                });
                 return; // Prevent further processing
               } else {
                 state.isComplete = true;
                 await storage.updateUser(user.id, { testState: state });
-                await currentBot.sendMessage(chatId, "Rahmat! AI tahlil qilmoqda, iltimos kuting...");
+                await currentBot.sendMessage(chatId, "Rahmat! AI tahlil qilmoqda, iltimos kuting...", {
+                  reply_markup: { remove_keyboard: true }
+                });
 
                 try {
                   const response = await openai.chat.completions.create({
@@ -136,7 +180,7 @@ Quyidagi menudan birini tanlang:`;
                       },
                       { 
                         role: "user", 
-                        content: state.answers.map((a, i) => `${i+1}. ${DIAGNOSTIC_QUESTIONS[i]}: ${a}`).join("\n") 
+                        content: state.answers.map((a, i) => `${i+1}. ${DIAGNOSTIC_QUESTIONS[i].question}: ${a}`).join("\n") 
                       }
                     ]
                   });
