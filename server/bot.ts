@@ -227,7 +227,17 @@ Quyidagi menudan birini tanlang:`;
               await currentBot.sendMessage(chatId, yogaCaption, { parse_mode: 'Markdown' });
             }
           } else if (msg.text === "🚀 Kouch") {
-            await currentBot.sendMessage(chatId, "Kouchlar ro'yxati shakllantirilmoqda. Tez orada bu yerda ma'lumotlar paydo bo'ladi.");
+            const dilraboCaption = `👤 **Dilrabo Ilxomjonovna**\n📍 Oliy ma’lumotli psixolog va mentor\n\nMen 11 yillik professional tajribaga ega psixolog va mentor sifatida, insonlarning ichki kuchini ochishga, qo'rquvlarini yengishga va o'ziga bo'lgan ishonchini oshirishga yordam beraman.\n\n📚 **Faoliyat yo'nalishlarim:**\n✅ Psixoterapya va kouching\n✅ Seminar-treninglar\n✅ Individual konsultatsiyalar\n\n🌟 **Maqsadim:**\nInsonlar hayotida ijobiy o'zgarishlarga ilhom berish. Har bir insonda cheksiz imkoniyatlar borligiga ishonaman!\n\n☝️ *Ishonch, qat'iyat va ichki kuch — muvaffaqiyat kalitidir!*`;
+
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/dilraboxon.jpg", {
+                caption: dilraboCaption,
+                parse_mode: 'Markdown'
+              });
+            } catch (err) {
+              console.error("Error sending photo:", err);
+              await currentBot.sendMessage(chatId, dilraboCaption, { parse_mode: 'Markdown' });
+            }
           } else if (msg.text === "🔙 Orqaga") {
             await currentBot.sendMessage(chatId, "Asosiy menu:", {
               reply_markup: {
