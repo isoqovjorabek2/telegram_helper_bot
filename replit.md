@@ -4,6 +4,14 @@
 
 TeleDash is a Telegram bot management dashboard. It combines a **Telegram bot backend** (for receiving and processing user messages via a diagnostic questionnaire) with a **web dashboard** (for monitoring users, messages, and bot activity). The bot asks users psychological diagnostic questions in Uzbek, collects their answers, and generates AI-powered summaries using OpenAI. The dashboard provides a real-time view of all bot interactions.
 
+## Recent Changes
+- AI diagnostic system completed with warm, empathetic responses
+- Psychologist catalog refactored: shows specialist name lists by category first, then full profiles on selection
+- Added "Katalogga qaytish" (Return to catalog) navigation button
+- Admin contact buttons integrated on all psychologist profiles
+- Added new psychologist Umida Alibayeva to children's psychology category
+- Completed "About Us", "Contact Admin", and "Free Courses" sections
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
