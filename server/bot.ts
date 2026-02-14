@@ -183,72 +183,96 @@ Quyidagi menudan birini tanlang:`;
 
             const layloCaption = `👤 **Mamasharipova Laylo Alisher qizi**\n📍 Oila va bolalar psixologi | Magistrant\n\nMen oila muammolari, bolalardagi rivojlanish va emotsional holatlar bilan ishlashda 4 yillik amaliy tajribaga ega mutaxassisman.\n\n📚 **Mutaxassislik:**\n✅ Oila va bolalar psixologi\n✅ Neyrograf va Art Terapevt\n✅ Psixoanaliz bo'yicha mutaxassis\n\n🎯 **Yo'nalishlar:**\nShaxsiy konsultatsiya | Shogirdlik kurslari | Bolalar psixologiyasi\n\n✨ *Psixologik o'zgarish sari birinchi qadamni birgalikda qo'yamiz!*`;
 
+            const adminMarkup = {
+              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
+            };
+
             try {
               await currentBot.sendPhoto(chatId, "./client/public/images/muhayyo.jpg", {
                 caption: muhayyoCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
               await currentBot.sendPhoto(chatId, "./client/public/images/sevara.jpg", {
                 caption: sevaraCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
               await currentBot.sendPhoto(chatId, "./client/public/images/muxlisa.jpg", {
                 caption: muxlisaCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
               await currentBot.sendPhoto(chatId, "./client/public/images/laylo.jpg", {
                 caption: layloCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
             } catch (err) {
               console.error("Error sending photos:", err);
-              await currentBot.sendMessage(chatId, muhayyoCaption, { parse_mode: 'Markdown' });
-              await currentBot.sendMessage(chatId, sevaraCaption, { parse_mode: 'Markdown' });
-              await currentBot.sendMessage(chatId, muxlisaCaption, { parse_mode: 'Markdown' });
-              await currentBot.sendMessage(chatId, layloCaption, { parse_mode: 'Markdown' });
+              await currentBot.sendMessage(chatId, muhayyoCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+              await currentBot.sendMessage(chatId, sevaraCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+              await currentBot.sendMessage(chatId, muxlisaCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+              await currentBot.sendMessage(chatId, layloCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
           } else if (msg.text === "👶 Bolalar Psixologi") {
             const fotimaCaption = `👤 **Umarova Fotima Rixsiboyevna**\n📍 Oliy ma’lumotli psixolog | Oila va bolalar psixologi | Lirik-logoped\n\nMen bolalardagi rivojlanish kechikishlari (ZPR, ZRR, RAS, Autizm) va duduqlanish onaning ruhiy holatiga bog'liqligini ko'rsatib beraman. Ona bilan ishlab, farzandning holati yaxshilanishiga yordam beraman.\n\n🏆 **Yutuq va tajriba:**\n✅ 13 yillik logopedik tajriba\n✅ 3 yillik amaliy psixologik tajriba\n✅ "Yilning eng malakali logopedi" nominatsiyasi g'olibi\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nPsichoanaliz | Oila va bolalar psixologiyasi | Nutq chiqarish | duduqlanishni davolash | Neyrografika | Kouching\n\n🌟 **Maqsadim:**\nJamiyatimizda sog'lom avlod ko'payishiga va insonlarning baxtli yashashiga sababchi bo'lish.`;
             
             const layloCaption = `👤 **Mamasharipova Laylo Alisher qizi**\n📍 Oila va bolalar psixologi | Magistrant\n\nMen oila muammolari, bolalardagi rivojlanish va emotsional holatlar bilan ishlashda 4 yillik amaliy tajribaga ega mutaxassisman.\n\n📚 **Mutaxassislik:**\n✅ Oila va bolalar psixologi\n✅ Neyrograf va Art Terapevt\n✅ Psixoanaliz bo'yicha mutaxassis\n\n🎯 **Yo'nalishlar:**\nShaxsiy konsultatsiya | Shogirdlik kurslari | Bolalar psixologiyasi\n\n✨ *Psixologik o'zgarish sari birinchi qadamni birgalikda qo'yamiz!*`;
 
+            const adminMarkup = {
+              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
+            };
+
             try {
               await currentBot.sendPhoto(chatId, "./client/public/images/fotima.jpg", {
                 caption: fotimaCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
               await currentBot.sendPhoto(chatId, "./client/public/images/laylo.jpg", {
                 caption: layloCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
             } catch (err) {
               console.error("Error sending photos:", err);
-              await currentBot.sendMessage(chatId, fotimaCaption, { parse_mode: 'Markdown' });
-              await currentBot.sendMessage(chatId, layloCaption, { parse_mode: 'Markdown' });
+              await currentBot.sendMessage(chatId, fotimaCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+              await currentBot.sendMessage(chatId, layloCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
           } else if (msg.text === "🧘 Yoga Trener") {
             const yogaCaption = `🧘 **Yoga va Meditatsiya bo'yicha mutaxassis**\n\n📜 **Ma'lumoti va tajribasi:**\n1) Heartfulness meditatsiyasi bo'yicha sertifikatlangan trener.\n2) IHYTP RYT-200 xalqaro yoga va meditatsiya instruktori.\n3) Yogaschool YTTC-100 o'qituvchilar kursini tamomlagan.\n4) Yoga Federation: Perinatal yoga (homiladorlar uchun yoga) mutaxassisi.\n\n🇮🇳 Hindistondagi **Kanha Shanti Vanam** ashramida tahsil olgan va o'sha yerda malaka oshirgan. Ko'plab sayyor retreitlar tashkilotchisi.\n\n✨ **Yo'nalishlar:**\n✅ Kattalar uchun yoga\n✅ Bolalar uchun yoga\n✅ Meditatsiya amaliyotlari\n✅ Homiladorlar uchun maxsus yoga`;
             
+            const adminMarkup = {
+              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
+            };
+            
             try {
               await currentBot.sendPhoto(chatId, "./client/public/images/yoga_instructor.png", {
                 caption: yogaCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
             } catch (err) {
               console.error("Error sending photo:", err);
-              await currentBot.sendMessage(chatId, yogaCaption, { parse_mode: 'Markdown' });
+              await currentBot.sendMessage(chatId, yogaCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
           } else if (msg.text === "🚀 Kouch") {
             const dilraboCaption = `👤 **Dilrabo Ilxomjonovna**\n📍 Oliy ma’lumotli psixolog va mentor\n\nMen 11 yillik professional tajribaga ega psixolog va mentor sifatida, insonlarning ichki kuchini ochishga, qo'rquvlarini yengishga va o'ziga bo'lgan ishonchini oshirishga yordam beraman.\n\n📚 **Faoliyat yo'nalishlarim:**\n✅ Psixoterapya va kouching\n✅ Seminar-treninglar\n✅ Individual konsultatsiyalar\n\n🌟 **Maqsadim:**\nInsonlar hayotida ijobiy o'zgarishlarga ilhom berish. Har bir insonda cheksiz imkoniyatlar borligiga ishonaman!\n\n☝️ *Ishonch, qat'iyat va ichki kuch — muvaffaqiyat kalitidir!*`;
 
+            const adminMarkup = {
+              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
+            };
+
             try {
               await currentBot.sendPhoto(chatId, "./client/public/images/dilraboxon.jpg", {
                 caption: dilraboCaption,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: adminMarkup
               });
             } catch (err) {
               console.error("Error sending photo:", err);
-              await currentBot.sendMessage(chatId, dilraboCaption, { parse_mode: 'Markdown' });
+              await currentBot.sendMessage(chatId, dilraboCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
           } else if (msg.text === "🔙 Orqaga") {
             await currentBot.sendMessage(chatId, "Asosiy menu:", {
