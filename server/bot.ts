@@ -174,105 +174,134 @@ Quyidagi menudan birini tanlang:`;
                 resize_keyboard: true
               }
             });
-          } else if (msg.text === "💑 Munosabatlar bo'yicha psixolog" || msg.text === "🎨 Art Terapevt") {
-            const muhayyoCaption = `👤 **Suyunova Muhayyo**\n📍 Amaliy psixolog\n\nMen 2 yildan ortiq vaqt davomida onlayn va offlayn ko‘rinishda psixologik konsultatsiyalar olib borib, ayollarning ichki holatini tiklash, oilaviy muammolardan chiqish va o‘ziga bo‘lgan ishonchni shakllantirishda yordam beraman.\n\n📌 **Men yordam beradigan holatlar:**\n💔 Ayollikni yo‘qotish, o‘zini qadrsiz his qilish\n❤️ Eri yoki qaynonasi bilan emotsional tushunmovchiliklar\n👨‍👩‍👧 Ota-ona bilan bolalikdan qolgan ichki og‘riqlar\n💸 Moliyaviy bloklar va pul bilan bog‘liq psixologik cheklovlar\n😔 Stress, ichki bosim va ruhiy charchoq\n🔢 O‘z yo‘lini topishda sonlar orqali yo‘nalish aniqlash\n\n🎯 **Ish uslublarim:**\n✅ Art-terapiya\n✅ Mak-karta orqali ichki holatni ochish\n✅ Neyrografika yordamida hissiyotlarni bo‘shatish\n✅ Meditatsiya va amaliy mashqlar\n\n🌷 **Shiorim:**\n“Har bir ayol ichida kuch bor — men uni uyg‘onishiga yordam beraman.”`;
-            
-            const sevaraCaption = `👤 **Erkinova Sevara Najmiddin qizi**\n📍 Amaliy psixolog | EMU University o’qituvchisi\n\nMen insonni stressdan asabiylikdan chiqarishda, ayollikni his etishda, o’ziga ishonchni oshirishda, ota-ona, turmusho’rtoq hamda farzand bilan munosabatlarni yaxshilashda amaliy ko’mak beraman.\n\n📚 **Faoliyat va tajriba:**\n1) 6 yillik nazariy tajriba.\n2) 3 yildan ortiq amaliy tajriba.\n3) Shaxsiy konsultatsiyalar, trening va art-terapiya.\n\n🎯 **Asosiy yo’nalishlar:**\nShaxsiy o‘sish | Oila psixologiyasi | Stress boshqarish | Motivatsiya | Art-terapiya | Neyrografika\n\n🌷 **Shiorim:**\n“Hech narsa shunchaki bo’lmaydi, hamma narsada hikmat bor va bu hikmatni ko’rishda yordam beraman.”`;
-
-            const muxlisaCaption = `👤 **Azimova Muxlisa Baxtiyor qizi**\n📍 Pedagog Psixolog\n\nMen insonlarning o'ziga bo'lgan ishonchini mustahkamlashda, stressda, xotirjamlikni barqarorlashtirishda, muammolarga art-terapiya (chizgilar) yordamida yechim topishda yordam beraman.\n\n📚 **Faoliyat va tajriba:**\n✅ 4 yillik nazariy bilim\n✅ 2 yillik amaliy tajriba\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nArt terapiya | Munosabatlar | Mandala terapiya | Oila Psixologiyasi | Neyrografika | Moliyaviy rivoj | Ayollik energiyasi\n\n🌟 **Shaxsiy Shior:**\n“Hozir yoki hech qachon!!! Har bir kichik qadam katta maqsadlar sari yo'l ochadi..!!”`;
-
-            const layloCaption = `👤 **Mamasharipova Laylo Alisher qizi**\n📍 Oila va bolalar psixologi | Magistrant\n\nMen oila muammolari, bolalardagi rivojlanish va emotsional holatlar bilan ishlashda 4 yillik amaliy tajribaga ega mutaxassisman.\n\n📚 **Mutaxassislik:**\n✅ Oila va bolalar psixologi\n✅ Neyrograf va Art Terapevt\n✅ Psixoanaliz bo'yicha mutaxassis\n\n🎯 **Yo'nalishlar:**\nShaxsiy konsultatsiya | Shogirdlik kurslari | Bolalar psixologiyasi\n\n✨ *Psixologik o'zgarish sari birinchi qadamni birgalikda qo'yamiz!*`;
-
-            const adminMarkup = {
-              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
-            };
-
-            try {
-              await currentBot.sendPhoto(chatId, "./client/public/images/muhayyo.jpg", {
-                caption: muhayyoCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-              await currentBot.sendPhoto(chatId, "./client/public/images/sevara.jpg", {
-                caption: sevaraCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-              await currentBot.sendPhoto(chatId, "./client/public/images/muxlisa.jpg", {
-                caption: muxlisaCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-              await currentBot.sendPhoto(chatId, "./client/public/images/laylo.jpg", {
-                caption: layloCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-            } catch (err) {
-              console.error("Error sending photos:", err);
-              await currentBot.sendMessage(chatId, muhayyoCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-              await currentBot.sendMessage(chatId, sevaraCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-              await currentBot.sendMessage(chatId, muxlisaCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-              await currentBot.sendMessage(chatId, layloCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-            }
+          } else if (msg.text === "💑 Munosabatlar bo'yicha psixolog") {
+            await currentBot.sendMessage(chatId, "Munosabatlar bo'yicha mutaxassislarimiz:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
+                  [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
+                  [{ text: "📚 Katalogga qaytish" }]
+                ],
+                resize_keyboard: true
+              }
+            });
+          } else if (msg.text === "🎨 Art Terapevt") {
+            await currentBot.sendMessage(chatId, "Art Terapevtlarimiz:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
+                  [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
+                  [{ text: "📚 Katalogga qaytish" }]
+                ],
+                resize_keyboard: true
+              }
+            });
           } else if (msg.text === "👶 Bolalar Psixologi") {
-            const fotimaCaption = `👤 **Umarova Fotima Rixsiboyevna**\n📍 Oliy ma’lumotli psixolog | Oila va bolalar psixologi | Lirik-logoped\n\nMen bolalardagi rivojlanish kechikishlari (ZPR, ZRR, RAS, Autizm) va duduqlanish onaning ruhiy holatiga bog'liqligini ko'rsatib beraman. Ona bilan ishlab, farzandning holati yaxshilanishiga yordam beraman.\n\n🏆 **Yutuq va tajriba:**\n✅ 13 yillik logopedik tajriba\n✅ 3 yillik amaliy psixologik tajriba\n✅ "Yilning eng malakali logopedi" nominatsiyasi g'olibi\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nPsichoanaliz | Oila va bolalar psixologiyasi | Nutq chiqarish | duduqlanishni davolash | Neyrografika | Kouching\n\n🌟 **Maqsadim:**\nJamiyatimizda sog'lom avlod ko'payishiga va insonlarning baxtli yashashiga sababchi bo'lish.`;
-            
-            const layloCaption = `👤 **Mamasharipova Laylo Alisher qizi**\n📍 Oila va bolalar psixologi | Magistrant\n\nMen oila muammolari, bolalardagi rivojlanish va emotsional holatlar bilan ishlashda 4 yillik amaliy tajribaga ega mutaxassisman.\n\n📚 **Mutaxassislik:**\n✅ Oila va bolalar psixologi\n✅ Neyrograf va Art Terapevt\n✅ Psixoanaliz bo'yicha mutaxassis\n\n🎯 **Yo'nalishlar:**\nShaxsiy konsultatsiya | Shogirdlik kurslari | Bolalar psixologiyasi\n\n✨ *Psixologik o'zgarish sari birinchi qadamni birgalikda qo'yamiz!*`;
-
-            const adminMarkup = {
-              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
-            };
-
-            try {
-              await currentBot.sendPhoto(chatId, "./client/public/images/fotima.jpg", {
-                caption: fotimaCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-              await currentBot.sendPhoto(chatId, "./client/public/images/laylo.jpg", {
-                caption: layloCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-            } catch (err) {
-              console.error("Error sending photos:", err);
-              await currentBot.sendMessage(chatId, fotimaCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-              await currentBot.sendMessage(chatId, layloCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-            }
+            await currentBot.sendMessage(chatId, "Bolalar psixologlari:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "👤 Umarova Fotima" }, { text: "👤 Mamasharipova Laylo" }],
+                  [{ text: "👤 Alibayeva Umida" }],
+                  [{ text: "📚 Katalogga qaytish" }]
+                ],
+                resize_keyboard: true
+              }
+            });
           } else if (msg.text === "🧘 Yoga Trener") {
-            const yogaCaption = `🧘 **Yoga va Meditatsiya bo'yicha mutaxassis**\n\n📜 **Ma'lumoti va tajribasi:**\n1) Heartfulness meditatsiyasi bo'yicha sertifikatlangan trener.\n2) IHYTP RYT-200 xalqaro yoga va meditatsiya instruktori.\n3) Yogaschool YTTC-100 o'qituvchilar kursini tamomlagan.\n4) Yoga Federation: Perinatal yoga (homiladorlar uchun yoga) mutaxassisi.\n\n🇮🇳 Hindistondagi **Kanha Shanti Vanam** ashramida tahsil olgan va o'sha yerda malaka oshirgan. Ko'plab sayyor retreitlar tashkilotchisi.\n\n✨ **Yo'nalishlar:**\n✅ Kattalar uchun yoga\n✅ Bolalar uchun yoga\n✅ Meditatsiya amaliyotlari\n✅ Homiladorlar uchun maxsus yoga`;
-            
-            const adminMarkup = {
-              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
-            };
-            
-            try {
-              await currentBot.sendPhoto(chatId, "./client/public/images/yoga_instructor.png", {
-                caption: yogaCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
-            } catch (err) {
-              console.error("Error sending photo:", err);
-              await currentBot.sendMessage(chatId, yogaCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
-            }
+            await currentBot.sendMessage(chatId, "Yoga va meditatsiya mutaxassislarimiz:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "🧘 Yoga Mutaxassisi" }],
+                  [{ text: "📚 Katalogga qaytish" }]
+                ],
+                resize_keyboard: true
+              }
+            });
           } else if (msg.text === "🚀 Kouch") {
-            const dilraboCaption = `👤 **Dilrabo Ilxomjonovna**\n📍 Oliy ma’lumotli psixolog va mentor\n\nMen 11 yillik professional tajribaga ega psixolog va mentor sifatida, insonlarning ichki kuchini ochishga, qo'rquvlarini yengishga va o'ziga bo'lgan ishonchini oshirishga yordam beraman.\n\n📚 **Faoliyat yo'nalishlarim:**\n✅ Psixoterapya va kouching\n✅ Seminar-treninglar\n✅ Individual konsultatsiyalar\n\n🌟 **Maqsadim:**\nInsonlar hayotida ijobiy o'zgarishlarga ilhom berish. Har bir insonda cheksiz imkoniyatlar borligiga ishonaman!\n\n☝️ *Ishonch, qat'iyat va ichki kuch — muvaffaqiyat kalitidir!*`;
-
-            const adminMarkup = {
-              inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]]
-            };
-
+            await currentBot.sendMessage(chatId, "Kouch va mentorlarimiz:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "👤 Dilrabo Ilxomjonovna" }],
+                  [{ text: "📚 Katalogga qaytish" }]
+                ],
+                resize_keyboard: true
+              }
+            });
+          } else if (msg.text === "📚 Katalogga qaytish") {
+            await currentBot.sendMessage(chatId, "Yo'nalishni tanlang:", {
+              reply_markup: {
+                keyboard: [
+                  [{ text: "💑 Munosabatlar bo'yicha psixolog" }, { text: "👶 Bolalar Psixologi" }],
+                  [{ text: "🎨 Art Terapevt" }, { text: "🧘 Yoga Trener" }],
+                  [{ text: "🚀 Kouch" }],
+                  [{ text: "🔙 Orqaga" }]
+                ],
+                resize_keyboard: true
+              }
+            });
+          } else if (msg.text === "👤 Suyunova Muhayyo") {
+            const caption = `👤 **Suyunova Muhayyo**\n📍 Amaliy psixolog\n\nMen 2 yildan ortiq vaqt davomida onlayn va offlayn ko‘rinishda psixologik konsultatsiyalar olib borib, ayollarning ichki holatini tiklash, oilaviy muammolardan chiqish va o‘ziga bo‘lgan ishonchni shakllantirishda yordam beraman.\n\n📌 **Men yordam beradigan holatlar:**\n💔 Ayollikni yo‘qotish, o‘zini qadrsiz his qilish\n❤️ Eri yoki qaynonasi bilan emotsional tushunmovchiliklar\n👨‍👩‍👧 Ota-ona bilan bolalikdan qolgan ichki og‘riqlar\n💸 Moliyaviy bloklar va pul bilan bog‘liq psixologik cheklovlar\n😔 Stress, ichki bosim va ruhiy charchoq\n🔢 O‘z yo‘lini topishda sonlar orqali yo‘nalish aniqlash\n\n🎯 **Ish uslublarim:**\n✅ Art-terapiya\n✅ Mak-karta orqali ichki holatni ochish\n✅ Neyrografika yordamida hissiyotlarni bo‘shatish\n✅ Meditatsiya va amaliy mashqlar\n\n🌷 **Shiorim:**\n“Har bir ayol ichida kuch bor — men uni uyg‘onishiga yordam beraman.”`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
             try {
-              await currentBot.sendPhoto(chatId, "./client/public/images/dilraboxon.jpg", {
-                caption: dilraboCaption,
-                parse_mode: 'Markdown',
-                reply_markup: adminMarkup
-              });
+              await currentBot.sendPhoto(chatId, "./client/public/images/muhayyo.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
             } catch (err) {
-              console.error("Error sending photo:", err);
-              await currentBot.sendMessage(chatId, dilraboCaption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "👤 Erkinova Sevara") {
+            const caption = `👤 **Erkinova Sevara Najmiddin qizi**\n📍 Amaliy psixolog | EMU University o’qituvchisi\n\nMen insonni stressdan asabiylikdan chiqarishda, ayollikni his etishda, o’ziga ishonchni oshirishda, ota-ona, turmusho’rtoq hamda farzand bilan munosabatlarni yaxshilashda amaliy ko’mak beraman.\n\n📚 **Faoliyat va tajriba:**\n1) 6 yillik nazariy tajriba.\n2) 3 yildan ortiq amaliy tajriba.\n3) Shaxsiy konsultatsiyalar, trening va art-terapiya.\n\n🎯 **Asosiy yo’nalishlar:**\nShaxsiy o‘sish | Oila psixologiyasi | Stress boshqarish | Motivatsiya | Art-terapiya | Neyrografika\n\n🌷 **Shiorim:**\n“Hech narsa shunchaki bo’lmaydi, hamma narsada hikmat bor va bu hikmatni ko’rishda yordam beraman.”`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/sevara.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "👤 Azimova Muxlisa") {
+            const caption = `👤 **Azimova Muxlisa Baxtiyor qizi**\n📍 Pedagog Psixolog\n\nMen insonlarning o'ziga bo'lgan ishonchini mustahkamlashda, stressda, xotirjamlikni barqarorlashtirishda, muammolarga art-terapiya (chizgilar) yordamida yechim topishda yordam beraman.\n\n📚 **Faoliyat va tajriba:**\n✅ 4 yillik nazariy bilim\n✅ 2 yillik amaliy tajriba\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nArt terapiya | Munosabatlar | Mandala terapiya | Oila Psixologiyasi | Neyrografika | Moliyaviy rivoj | Ayollik energiyasi\n\n🌟 **Shaxsiy Shior:**\n“Hozir yoki hech qachon!!! Har bir kichik qadam katta maqsadlar sari yo'l ochadi..!!”`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/muxlisa.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "👤 Mamasharipova Laylo") {
+            const caption = `👤 **Mamasharipova Laylo Alisher qizi**\n📍 Oila va bolalar psixologi | Magistrant\n\nMen oila muammolari, bolalardagi rivojlanish va emotsional holatlar bilan ishlashda 4 yillik amaliy tajribaga ega mutaxassisman.\n\n📚 **Mutaxassislik:**\n✅ Oila va bolalar psixologi\n✅ Neyrograf va Art Terapevt\n✅ Psixoanaliz bo'yicha mutaxassis\n\n🎯 **Yo'nalishlar:**\nShaxsiy konsultatsiya | Shogirdlik kurslari | Bolalar psixologiyasi\n\n✨ *Psixologik o'zgarish sari birinchi qadamni birgalikda qo'yamiz!*`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/laylo.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "👤 Umarova Fotima") {
+            const caption = `👤 **Umarova Fotima Rixsiboyevna**\n📍 Oliy ma’lumotli psixolog | Oila va bolalar psixologi | Lirik-logoped\n\nMen bolalardagi rivojlanish kechikishlari (ZPR, ZRR, RAS, Autizm) va duduqlanish onaning ruhiy holatiga bog'liqligini ko'rsatib beraman. Ona bilan ishlab, farzandning holati yaxshilanishiga yordam beraman.\n\n🏆 **Yutuq va tajriba:**\n✅ 13 yillik logopedik tajriba\n✅ 3 yillik amaliy psixologik tajriba\n✅ "Yilning eng malakali logopedi" nominatsiyasi g'olibi\n✅ "Anor" amaliy psixologlar klubi a'zosi\n\n🎯 **Asosiy yo'nalishlar:**\nPsichoanaliz | Oila va bolalar psixologiyasi | Nutq chiqarish | duduqlanishni davolash | Neyrografika | Kouching\n\n🌟 **Maqsadim:**\nJamiyatimizda sog'lom avlod ko'payishiga va insonlarning baxtli yashashiga sababchi bo'lish.`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/fotima.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "👤 Alibayeva Umida") {
+            const caption = `👤 **Umida Alibayeva Asomiddinovna**\n📍 Psixoanalit | Oila va bolalar psixologi\n\nMen 7 yillik amaliy tajribaga ega psixologman. Insonning ichki dunyosini tushunish, oilaviy munosabatlarni sog'lomlashtirish va bolalardagi psixologik o'zgarishlarni to'g'ri yo'naltirishda yordam beraman.\n\n📚 **Tajriba va Yo'nalishlar:**\n✅ 7 yillik amaliy tajriba\n✅ Shaxsiy psixologik tahlil (Psixoanaliz)\n✅ Oila va juftliklar bilan ishlash\n✅ Bolalar va o'smirlar psixologiyasi\n\n🎯 **Asosiy maqsadim:**\nInsonlarga o'zligini anglashda va hayotiy qiyinchiliklarni ruhiy xotirjamlik bilan yengishda ko'maklashish.\n\n🌟 **Shiorim:**\n“O‘zini anglagan inson — baxtli inson!”`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/umida.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "🧘 Yoga Mutaxassisi") {
+            const caption = `🧘 **Yoga va Meditatsiya bo'yicha mutaxassis**\n\n📜 **Ma'lumoti va tajribasi:**\n1) Heartfulness meditatsiyasi bo'yicha sertifikatlangan trener.\n2) IHYTP RYT-200 xalqaro yoga va meditatsiya instruktori.\n3) Yogaschool YTTC-100 o'qituvchilar kursini tamomlagan.\n4) Yoga Federation: Perinatal yoga (homiladorlar uchun yoga) mutaxassisi.\n\n🇮🇳 Hindistondagi **Kanha Shanti Vanam** ashramida tahsil olgan va o'sha yerda malaka oshirgan. Ko'plab sayyor retreitlar tashkilotchisi.\n\n✨ **Yo'nalishlar:**\n✅ Kattalar uchun yoga\n✅ Bolalar uchun yoga\n✅ Meditatsiya amaliyotlari\n✅ Homiladorlar uchun maxsus yoga`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/yoga_instructor.png", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
+          } else if (msg.text === "👤 Dilrabo Ilxomjonovna") {
+            const caption = `👤 **Dilrabo Ilxomjonovna**\n📍 Oliy ma’lumotli psixolog va mentor\n\nMen 11 yillik professional tajribaga ega psixolog va mentor sifatida, insonlarning ichki kuchini ochishga, qo'rquvlarini yengishga va o'ziga bo'lgan ishonchini oshirishga yordam beraman.\n\n📚 **Faoliyat yo'nalishlarim:**\n✅ Psixoterapya va kouching\n✅ Seminar-treninglar\n✅ Individual konsultatsiyalar\n\n🌟 **Maqsadim:**\nInsonlar hayotida ijobiy o'zgarishlarga ilhom berish. Har bir insonda cheksiz imkoniyatlar borligiga ishonaman!\n\n☝️ *Ishonch, qat'iyat va ichki kuch — muvaffaqiyat kalitidir!*`;
+            const adminMarkup = { inline_keyboard: [[{ text: "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/dilraboxon.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
           } else if (msg.text === "🔙 Orqaga") {
             await currentBot.sendMessage(chatId, "Asosiy menu:", {
