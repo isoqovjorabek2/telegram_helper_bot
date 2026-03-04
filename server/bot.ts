@@ -343,13 +343,18 @@ export function setupBot() {
 
                 // 2. Notify Admin via Telegram
                 const adminChatId = "83396235"; 
-                const sosAlert = `🆘 **YANGI SOS XABAR!**\n\n👤 **Foydalanuvchi:** ${user.firstName || ""} ${user.lastName || ""} (@${user.username || "username_yo'q"})\n🆔 **ID:** ${user.telegramId}\n\n📊 **Darajasi:**\n1. Xavf: ${state.answers[0]}\n2. Bosim: ${state.answers[1]}\n3. Bolalar: ${state.answers[2]}\n\n💬 **Batafsil:**\n${msg.text}`;
+                const sosAlert = `🆘 YANGI SOS XABAR!\n\nFoydalanuvchi: ${user.firstName || ""} ${user.lastName || ""} (@${user.username || "username_yo'q"})\nID: ${user.telegramId}\n\nDarajasi:\n1. Xavf: ${state.answers[0]}\n2. Bosim: ${state.answers[1]}\n3. Bolalar: ${state.answers[2]}\n\nXabar: ${msg.text}`;
                 
                 try {
-                  console.log(`SOS Alert to ${adminChatId} from ${user.username || user.telegramId}: ${msg.text}`);
-                  await bot.sendMessage(adminChatId, sosAlert, { parse_mode: 'Markdown' });
+                  console.log(`ATTEMPTING SOS NOTIFICATION to ${adminChatId}`);
+                  if (currentBot) {
+                    await currentBot.sendMessage(adminChatId, sosAlert);
+                    console.log(`SOS NOTIFICATION SENT SUCCESSFULLY to ${adminChatId}`);
+                  } else {
+                    console.error("currentBot is null during SOS notification");
+                  }
                 } catch (err) {
-                  console.error("Failed to notify admin about SOS:", err);
+                  console.error("CRITICAL: Failed to notify admin about SOS:", err);
                 }
               }
             } else {
