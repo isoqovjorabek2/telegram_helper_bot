@@ -347,7 +347,7 @@ export function setupBot() {
                 
                 try {
                   console.log(`SOS Alert to ${adminChatId} from ${user.username || user.telegramId}: ${msg.text}`);
-                  await currentBot.sendMessage(adminChatId, sosAlert, { parse_mode: 'Markdown' });
+                  await bot.sendMessage(adminChatId, sosAlert, { parse_mode: 'Markdown' });
                 } catch (err) {
                   console.error("Failed to notify admin about SOS:", err);
                 }
