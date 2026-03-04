@@ -356,53 +356,55 @@ export function setupBot() {
               }
             });
           } else if (msg.text === t.cats.rel) {
-            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по отношениям:" : "Munosabatlar bo'yicha mutaxassislarimiz:", {
+            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по отношениям и личностному росту:" : "Munosabatlar va shaxsiy rivojlanish bo'yicha mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
+                  [{ text: "👤 Dilrabo Ilxomjonovna" }],
                   [{ text: t.return_catalog }]
                 ],
                 resize_keyboard: true
               }
             });
           } else if (msg.text === t.cats.art) {
-            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши арт-терапевты:" : "Art Terapevtlarimiz:", {
+            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши арт-терапевты и специалисты по эмоциям:" : "Art Terapevtlar va hissiyotlar bilan ishlovchi mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
+                  [{ text: "👤 Umarova Fotima" }],
                   [{ text: t.return_catalog }]
                 ],
                 resize_keyboard: true
               }
             });
           } else if (msg.text === t.cats.child) {
-            await currentBot.sendMessage(chatId, lang === 'ru' ? "Детские психологи:" : "Bolalar psixologlari:", {
+            await currentBot.sendMessage(chatId, lang === 'ru' ? "Детские и подростковые психологи, специалисты по воспитанию:" : "Bolalar, o'smirlar psixologlari va tarbiya mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Umarova Fotima" }, { text: "👤 Mamasharipova Laylo" }],
-                  [{ text: "👤 Alibayeva Umida" }],
+                  [{ text: "👤 Alibayeva Umida" }, { text: "👤 Azimova Muxlisa" }],
                   [{ text: t.return_catalog }]
                 ],
                 resize_keyboard: true
               }
             });
           } else if (msg.text === t.cats.yoga) {
-            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по йоге и медитации:" : "Yoga va meditatsiya mutaxassislarimiz:", {
+            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по йоге, медитации и женской энергии:" : "Yoga, meditatsiya va ayollik energiyasi mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
-                  [{ text: "🧘 Yoga Mutaxassisi" }],
+                  [{ text: "🧘 Yoga Mutaxassisi" }, { text: "👤 Suyunova Muhayyo" }],
                   [{ text: t.return_catalog }]
                 ],
                 resize_keyboard: true
               }
             });
           } else if (msg.text === t.cats.coach) {
-            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши коучи и менторы:" : "Kouch va mentorlarimiz:", {
+            await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши коучи, менторы и специалисты по достижению целей:" : "Kouch, mentor va maqsadlarga erishish mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
-                  [{ text: "👤 Dilrabo Ilxomjonovna" }],
+                  [{ text: "👤 Dilrabo Ilxomjonovna" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: t.return_catalog }]
                 ],
                 resize_keyboard: true
