@@ -110,7 +110,7 @@ const MESSAGES = {
     ai_error: "Kechirasiz, tahlil qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.",
     about_text: "🌿 **'Psixolog Top' - Ayollar uchun ko'mak va qo'llab-quvvatlash markazi**\n\nBizning maqsadimiz — har bir ayolning ruhiy salomatligini asrash va unga kerakli mutaxassisni topishga ko'maklashish.",
     admin_text: "Savollar va takliflar bo'yicha bizning adminimiz bilan bog'laning:",
-    courses_text: "🎓 **Bepul bilimlar va darslar bo'limi**\n\nHozirda quyidagi darslarimiz mavjud...",
+    courses_text: "🎓 **Bepul bilimlar va darslar bo'limi**\n\nSiz uchun foydali va qiziqarli darslarimiz ro'yxati:\n\n1️⃣ **Stressni boshqarish** — Kunlik hayotdagi bosimdan xalos bo'lish usullari.\n2️⃣ **O'ziga ishonchni oshirish** — Ichki kuchingizni kashf eting.\n3️⃣ **Munosabatlar sirlari** — Yaqinlaringiz bilan uyg'unlikda yashashni o'rganing.\n4️⃣ **Ayollik energiyasi** — Ichki go'zallik va xotirjamlikka erishish.\n\nDarslarni boshlash uchun adminimizga murojaat qiling!",
     select_cat: "Quyidagi yo'nalishlardan birini tanlang:",
     return_catalog: "📚 Katalogga qaytish",
     cats: {
@@ -137,7 +137,7 @@ const MESSAGES = {
     ai_error: "Извините, произошла ошибка при анализе. Пожалуйста, попробуйте позже.",
     about_text: "🌿 **'Psixolog Top' - Центр помощи и поддержки для женщин**\n\nНаша цель — сохранить психическое здоровье каждой женщины и помочь ей найти нужного специалиста.",
     admin_text: "По вопросам и предложениям обращайтесь к нашему админу:",
-    courses_text: "🎓 **Раздел бесплатных знаний и уроков**\n\nВ настоящее время доступны следующие уроки...",
+    courses_text: "🎓 **Раздел бесплатных знаний и уроков**\n\nСписок полезных и интересных уроков для вас:\n\n1️⃣ **Управление стрессом** — Способы избавления от повседневного давления.\n2️⃣ **Повышение уверенности в себе** — Откройте свою внутреннюю силу.\n3️⃣ **Секреты отношений** — Научитесь жить в гармонии с близкими.\n4️⃣ **Женская энергия** — Достижение внутренней красоты и спокойствия.\n\nДля начала занятий обращайтесь к нашему админу!",
     select_cat: "Выберите одно из направлений:",
     return_catalog: "📚 Вернуться в каталог",
     cats: {
