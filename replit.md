@@ -9,6 +9,7 @@ TeleDash is a Telegram bot management dashboard. It combines a **Telegram bot ba
 - Psychologist catalog refactored: shows specialist name lists by category first, then full profiles on selection
 - Added "Katalogga qaytish" (Return to catalog) navigation button
 - Admin contact buttons integrated on all psychologist profiles
+- Added new psychologist Amanova Sitora: Numerologist, family relations, secrets of being a favorite woman (image: sitora.jpg)
 - Added new psychologist Zilola Azimova: Higher education psychologist, works with emotions/anxiety/stress/children (image: zilola.jpg)
 - Added new psychologist Umida Alibayeva to children's psychology category
 - Completed "About Us", "Contact Admin", and "Free Courses" sections
