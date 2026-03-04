@@ -348,10 +348,9 @@ export function setupBot() {
                 try {
                   console.log(`ATTEMPTING SOS NOTIFICATION to ${adminChatId}`);
                   if (currentBot) {
+                    // Send to Admin
                     await currentBot.sendMessage(adminChatId, sosAlert);
                     console.log(`SOS NOTIFICATION SENT SUCCESSFULLY to ${adminChatId}`);
-                  } else {
-                    console.error("currentBot is null during SOS notification");
                   }
                 } catch (err) {
                   console.error("CRITICAL: Failed to notify admin about SOS:", err);
