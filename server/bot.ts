@@ -106,7 +106,11 @@ const MESSAGES = {
     lang: "🌐 Tilni o'zgartirish",
     start_diagnostics: "Keling, 10 ta savol orqali holatingizni aniqlaymiz.",
     ai_analyzing: "Rahmat! AI tahlil qilmoqda, iltimos kuting...",
-    sos_welcome: "🆘 Siz xavfsiz joydamisiz? Iltimos, holatingizni 3-4 ta gap bilan tushuntirib bering. Bizning mutaxassislarimiz sizga shoshilinch yordam berishadi.",
+    sos_welcome: "🆘 Siz xavfsiz joydamisiz? Keling, holatingizni aniqlash uchun 3 ta savolga javob bersangiz.",
+    sos_q1: "1. Hozirgi vaqtda jismoniy xavf ostidamisiz? (Ha/Yo'q)",
+    sos_q2: "2. Ruhiy bosim yoki doimiy qo'rquv his qilyapsizmi? (Ha/Yo'q)",
+    sos_q3: "3. Farzandlaringiz ham xavf ostidami? (Ha/Yo'q)",
+    sos_desc: "Iltimos, vaziyatni qisqacha (3-4 ta gap) tushuntirib bering:",
     sos_received: "Rahmat. Sizning murojaatingiz qabul qilindi. Tez orada mutaxassislarimiz siz bilan bog'lanishadi. Iltimos, xotirjam bo'ling.",
     ai_result: "📊 Diagnostika natijasi:",
     ai_recommendation: "\nSizning holatingizdan kelib chiqib, biz sizga **'{category}'** yo'nalishidagi mutaxassis bilan bog'lanishni maslahat beramiz.",
@@ -136,7 +140,11 @@ const MESSAGES = {
     lang: "🌐 Сменить язык",
     start_diagnostics: "Давайте определим ваше состояние с помощью 10 вопросов.",
     ai_analyzing: "Спасибо! ИИ проводит анализ, пожалуйста, подождите...",
-    sos_welcome: "🆘 Вы в безопасности? Пожалуйста, опишите вашу ситуацию в 3-4 предложениях. Наши специалисты окажут вам экстренную поддержку.",
+    sos_welcome: "🆘 Вы в безопасности? Пожалуйста, ответьте на 3 вопроса, чтобы мы могли оценить ситуацию.",
+    sos_q1: "1. Находитесь ли вы в физической опасности в данный момент? (Да/Нет)",
+    sos_q2: "2. Чувствуете ли вы психологическое давление или постоянный страх? (Да/Нет)",
+    sos_q3: "3. Находятся ли ваши дети также в опасности? (Да/Нет)",
+    sos_desc: "Пожалуйста, кратко опишите ситуацию (3-4 предложения):",
     sos_received: "Спасибо. Ваше обращение принято. Наши специалисты свяжутся с вами в ближайшее время. Пожалуйста, сохраняйте спокойствие.",
     ai_result: "📊 Результат диагностики:",
     ai_recommendation: "\nИсходя из вашего состояния, мы рекомендуем вам обратиться к специалисту в направлении **'{category}'**.",
@@ -274,40 +282,75 @@ export function setupBot() {
             });
           } else if (msg.text === t.sos) {
             await storage.updateUser(user.id, { 
-              testState: { isSOS: true, step: 1 } 
+              testState: { isSOS: true, step: 1, answers: [] } 
             });
-            await currentBot.sendMessage(chatId, t.sos_welcome, {
-              reply_markup: { remove_keyboard: true }
+            await currentBot.sendMessage(chatId, t.sos_welcome + "\n\n" + t.sos_q1, {
+              reply_markup: {
+                keyboard: [[{ text: lang === 'ru' ? "Да" : "Ha" }, { text: lang === 'ru' ? "Нет" : "Yo'q" }]],
+                resize_keyboard: true,
+                one_time_keyboard: true
+              }
             });
           } else if (user.testState && typeof user.testState === 'object' && !(user.testState as any).isComplete) {
             const menuButtons = [t.diagnostics, t.catalog, t.about, t.admin, t.sos, t.courses, t.lang, "🇺🇿 O'zbekcha", "🇷🇺 Русский"];
             if (menuButtons.includes(msg.text || "")) {
               await storage.updateUser(user.id, { testState: null });
             } else if ((user.testState as any).isSOS) {
-              await storage.updateUser(user.id, { testState: null });
+              const state = user.testState as { isSOS: boolean, step: number, answers: string[] };
+              state.answers.push(msg.text || "");
               
-              // 1. Send confirmation to user
-              await currentBot.sendMessage(chatId, t.sos_received, {
-                reply_markup: {
-                  keyboard: [
-                    [{ text: t.diagnostics }, { text: t.catalog }],
-                    [{ text: t.about }, { text: t.admin }],
-                    [{ text: t.sos }],
-                    [{ text: t.courses }, { text: t.lang }]
-                  ],
-                  resize_keyboard: true
-                }
-              });
+              if (state.step === 1) {
+                state.step = 2;
+                await storage.updateUser(user.id, { testState: state });
+                await currentBot.sendMessage(chatId, t.sos_q2, {
+                  reply_markup: {
+                    keyboard: [[{ text: lang === 'ru' ? "Да" : "Ha" }, { text: lang === 'ru' ? "Нет" : "Yo'q" }]],
+                    resize_keyboard: true,
+                    one_time_keyboard: true
+                  }
+                });
+              } else if (state.step === 2) {
+                state.step = 3;
+                await storage.updateUser(user.id, { testState: state });
+                await currentBot.sendMessage(chatId, t.sos_q3, {
+                  reply_markup: {
+                    keyboard: [[{ text: lang === 'ru' ? "Да" : "Ha" }, { text: lang === 'ru' ? "Нет" : "Yo'q" }]],
+                    resize_keyboard: true,
+                    one_time_keyboard: true
+                  }
+                });
+              } else if (state.step === 3) {
+                state.step = 4;
+                await storage.updateUser(user.id, { testState: state });
+                await currentBot.sendMessage(chatId, t.sos_desc, {
+                  reply_markup: { remove_keyboard: true }
+                });
+              } else {
+                await storage.updateUser(user.id, { testState: null });
+                
+                // 1. Send confirmation to user
+                await currentBot.sendMessage(chatId, t.sos_received, {
+                  reply_markup: {
+                    keyboard: [
+                      [{ text: t.diagnostics }, { text: t.catalog }],
+                      [{ text: t.about }, { text: t.admin }],
+                      [{ text: t.sos }],
+                      [{ text: t.courses }, { text: t.lang }]
+                    ],
+                    resize_keyboard: true
+                  }
+                });
 
-              // 2. Notify Admin via Telegram
-              const adminChatId = process.env.ADMIN_CHAT_ID || "83396235"; 
-              const sosAlert = `🆘 **YANGI SOS XABAR!**\n\n👤 **Foydalanuvchi:** ${user.firstName || ""} ${user.lastName || ""} (@${user.username || "username_yo'q"})\n🆔 **ID:** ${user.telegramId}\n\n💬 **Xabar:**\n${msg.text}`;
-              
-              try {
-                console.log(`SOS Alert from ${user.username || user.telegramId}: ${msg.text}`);
-                await currentBot.sendMessage(adminChatId, sosAlert, { parse_mode: 'Markdown' });
-              } catch (err) {
-                console.error("Failed to notify admin about SOS:", err);
+                // 2. Notify Admin via Telegram
+                const adminChatId = process.env.ADMIN_CHAT_ID || "83396235"; 
+                const sosAlert = `🆘 **YANGI SOS XABAR!**\n\n👤 **Foydalanuvchi:** ${user.firstName || ""} ${user.lastName || ""} (@${user.username || "username_yo'q"})\n🆔 **ID:** ${user.telegramId}\n\n📊 **Darajasi:**\n1. Xavf: ${state.answers[0]}\n2. Bosim: ${state.answers[1]}\n3. Bolalar: ${state.answers[2]}\n\n💬 **Batafsil:**\n${msg.text}`;
+                
+                try {
+                  console.log(`SOS Alert from ${user.username || user.telegramId}: ${msg.text}`);
+                  await currentBot.sendMessage(adminChatId, sosAlert, { parse_mode: 'Markdown' });
+                } catch (err) {
+                  console.error("Failed to notify admin about SOS:", err);
+                }
               }
             } else {
               const state = user.testState as { currentQuestion: number, answers: string[], isComplete: boolean };
