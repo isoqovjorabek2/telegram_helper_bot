@@ -359,6 +359,7 @@ export function setupBot() {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по отношениям и личностному росту:" : "Munosabatlar va shaxsiy rivojlanish bo'yicha mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
+                  [{ text: "👤 Zamira Xolbayeva" }],
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
                   [{ text: "👤 Dilrabo Ilxomjonovna" }],
@@ -371,6 +372,7 @@ export function setupBot() {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши арт-терапевты и специалисты по эмоциям:" : "Art Terapevtlar va hissiyotlar bilan ishlovchi mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
+                  [{ text: "👤 Zamira Xolbayeva" }],
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
                   [{ text: "👤 Umarova Fotima" }],
@@ -383,6 +385,7 @@ export function setupBot() {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Детские и подростковые психологи, специалисты по воспитанию:" : "Bolalar, o'smirlar psixologlari va tarbiya mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
+                  [{ text: "👤 Zamira Xolbayeva" }],
                   [{ text: "👤 Umarova Fotima" }, { text: "👤 Mamasharipova Laylo" }],
                   [{ text: "👤 Alibayeva Umida" }, { text: "👤 Azimova Muxlisa" }],
                   [{ text: t.return_catalog }]
@@ -394,6 +397,7 @@ export function setupBot() {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по йоге, медитации и женской энергии:" : "Yoga, meditatsiya va ayollik energiyasi mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
+                  [{ text: "👤 Zamira Xolbayeva" }],
                   [{ text: "🧘 Yoga Mutaxassisi" }, { text: "👤 Suyunova Muhayyo" }],
                   [{ text: t.return_catalog }]
                 ],
@@ -404,12 +408,23 @@ export function setupBot() {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши коучи, менторы и специалисты по достижению целей:" : "Kouch, mentor va maqsadlarga erishish mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
+                  [{ text: "👤 Zamira Xolbayeva" }],
                   [{ text: "👤 Dilrabo Ilxomjonovna" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: t.return_catalog }]
                 ],
                 resize_keyboard: true
               }
             });
+          } else if (msg.text === "👤 Zamira Xolbayeva") {
+            const caption = lang === 'ru'
+              ? `👤 **Замира Холбаева Нарзуллаевна**\n\nОснователь Академии Психологии «PsyPro Academy», Практический Психолог, Специалист по отношениям. 13 лет опыта. Психолог с высшим образованием.\n\n✨ 10.000+ довольных клиентов`
+              : `👤 **Zamira Xolbayeva Narzullayevna**\n\n“PsyPro Academy” Psixologiya Akademiyasi asoschisi, Amaliy Psixolog, Munosabatlar buyicha mutaxassis. 13 yillik tajriba. Oliy ma’lumotli Psixolog.\n\n✨ 10.000 + mamnun mijozlar`;
+            const adminMarkup = { inline_keyboard: [[{ text: lang === 'ru' ? "💬 Связаться с админом" : "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/zamira.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
           } else if (msg.text === t.back) {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Главное меню:" : "Asosiy menu:", {
               reply_markup: {
