@@ -7,6 +7,7 @@ TeleDash is a Telegram bot management dashboard. It combines a **Telegram bot ba
 ## Recent Changes
 - AI diagnostic system completed with warm, empathetic responses
 - AI assistant named "Lola" integrated into the diagnostic process for a more personal touch
+- Added "SOS / Zulmdaman" feature for emergency social support
 - Psychologist catalog refactored: shows specialist name lists by category first, then full profiles on selection
 - Added "Katalogga qaytish" (Return to catalog) navigation button
 - Admin contact buttons integrated on all psychologist profiles

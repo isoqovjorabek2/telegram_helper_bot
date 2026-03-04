@@ -100,11 +100,14 @@ const MESSAGES = {
     catalog: "📚 Psixologlar Katalogi",
     about: "ℹ️ Biz haqimizda",
     admin: "👨‍💻 Admin bilan bog'lanish",
+    sos: "🆘 Zulmdaman (SOS)",
     courses: "🎓 Bepul Darslar",
     back: "🔙 Orqaga",
     lang: "🌐 Tilni o'zgartirish",
     start_diagnostics: "Keling, 10 ta savol orqali holatingizni aniqlaymiz.",
     ai_analyzing: "Rahmat! AI tahlil qilmoqda, iltimos kuting...",
+    sos_welcome: "🆘 Siz xavfsiz joydamisiz? Iltimos, holatingizni 3-4 ta gap bilan tushuntirib bering. Bizning mutaxassislarimiz sizga shoshilinch yordam berishadi.",
+    sos_received: "Rahmat. Sizning murojaatingiz qabul qilindi. Tez orada mutaxassislarimiz siz bilan bog'lanishadi. Iltimos, xotirjam bo'ling.",
     ai_result: "📊 Diagnostika natijasi:",
     ai_recommendation: "\nSizning holatingizdan kelib chiqib, biz sizga **'{category}'** yo'nalishidagi mutaxassis bilan bog'lanishni maslahat beramiz.",
     ai_error: "Kechirasiz, tahlil qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.",
@@ -127,11 +130,14 @@ const MESSAGES = {
     catalog: "📚 Каталог психологов",
     about: "ℹ️ О нас",
     admin: "👨‍💻 Связь с админом",
+    sos: "🆘 Я в беде (SOS)",
     courses: "🎓 Бесплатные уроки",
     back: "🔙 Назад",
     lang: "🌐 Сменить язык",
     start_diagnostics: "Давайте определим ваше состояние с помощью 10 вопросов.",
     ai_analyzing: "Спасибо! ИИ проводит анализ, пожалуйста, подождите...",
+    sos_welcome: "🆘 Вы в безопасности? Пожалуйста, опишите вашу ситуацию в 3-4 предложениях. Наши специалисты окажут вам экстренную поддержку.",
+    sos_received: "Спасибо. Ваше обращение принято. Наши специалисты свяжутся с вами в ближайшее время. Пожалуйста, сохраняйте спокойствие.",
     ai_result: "📊 Результат диагностики:",
     ai_recommendation: "\nИсходя из вашего состояния, мы рекомендуем вам обратиться к специалисту в направлении **'{category}'**.",
     ai_error: "Извините, произошла ошибка при анализе. Пожалуйста, попробуйте позже.",
@@ -224,6 +230,7 @@ export function setupBot() {
                 keyboard: [
                   [{ text: uzT.diagnostics }, { text: uzT.catalog }],
                   [{ text: uzT.about }, { text: uzT.admin }],
+                  [{ text: uzT.sos }],
                   [{ text: uzT.courses }, { text: uzT.lang }]
                 ],
                 resize_keyboard: true
@@ -237,6 +244,7 @@ export function setupBot() {
                 keyboard: [
                   [{ text: ruT.diagnostics }, { text: ruT.catalog }],
                   [{ text: ruT.about }, { text: ruT.admin }],
+                  [{ text: ruT.sos }],
                   [{ text: ruT.courses }, { text: ruT.lang }]
                 ],
                 resize_keyboard: true
@@ -264,10 +272,32 @@ export function setupBot() {
                 one_time_keyboard: true
               }
             });
+          } else if (msg.text === t.sos) {
+            await storage.updateUser(user.id, { 
+              testState: { isSOS: true, step: 1 } 
+            });
+            await currentBot.sendMessage(chatId, t.sos_welcome, {
+              reply_markup: { remove_keyboard: true }
+            });
           } else if (user.testState && typeof user.testState === 'object' && !(user.testState as any).isComplete) {
-            const menuButtons = [t.diagnostics, t.catalog, t.about, t.admin, t.courses, t.lang, "🇺🇿 O'zbekcha", "🇷🇺 Русский"];
+            const menuButtons = [t.diagnostics, t.catalog, t.about, t.admin, t.sos, t.courses, t.lang, "🇺🇿 O'zbekcha", "🇷🇺 Русский"];
             if (menuButtons.includes(msg.text || "")) {
               await storage.updateUser(user.id, { testState: null });
+            } else if ((user.testState as any).isSOS) {
+              await storage.updateUser(user.id, { testState: null });
+              await currentBot.sendMessage(chatId, t.sos_received, {
+                reply_markup: {
+                  keyboard: [
+                    [{ text: t.diagnostics }, { text: t.catalog }],
+                    [{ text: t.about }, { text: t.admin }],
+                    [{ text: t.sos }],
+                    [{ text: t.courses }, { text: t.lang }]
+                  ],
+                  resize_keyboard: true
+                }
+              });
+              // Log the SOS message to admin (internal logic)
+              console.log(`SOS Alert from ${user.username || user.telegramId}: ${msg.text}`);
             } else {
               const state = user.testState as { currentQuestion: number, answers: string[], isComplete: boolean };
               state.answers.push(msg.text || "");
@@ -452,6 +482,7 @@ export function setupBot() {
                 keyboard: [
                   [{ text: t.diagnostics }, { text: t.catalog }],
                   [{ text: t.about }, { text: t.admin }],
+                  [{ text: t.sos }],
                   [{ text: t.courses }, { text: t.lang }]
                 ],
                 resize_keyboard: true
