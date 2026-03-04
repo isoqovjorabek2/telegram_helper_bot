@@ -360,6 +360,7 @@ export function setupBot() {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Zamira Xolbayeva" }],
+                  [{ text: "👤 Zilola Azimova" }],
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
                   [{ text: "👤 Dilrabo Ilxomjonovna" }],
@@ -373,6 +374,7 @@ export function setupBot() {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Zamira Xolbayeva" }],
+                  [{ text: "👤 Zilola Azimova" }],
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
                   [{ text: "👤 Umarova Fotima" }],
@@ -386,6 +388,7 @@ export function setupBot() {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Zamira Xolbayeva" }],
+                  [{ text: "👤 Zilola Azimova" }],
                   [{ text: "👤 Umarova Fotima" }, { text: "👤 Mamasharipova Laylo" }],
                   [{ text: "👤 Alibayeva Umida" }, { text: "👤 Azimova Muxlisa" }],
                   [{ text: t.return_catalog }]
@@ -393,6 +396,14 @@ export function setupBot() {
                 resize_keyboard: true
               }
             });
+          } else if (msg.text === "👤 Zilola Azimova") {
+            const caption = `👤 **Zilola Azimova**\nOliy Ma'lumotli Psixolog\n\n💬 Менинг консультацияларимда сиз:\n✨ ҳис-туйғулангизни англашни ўрганасиз\n✨ хавотир ва стрессни бошқариш усулларини билиб оласиз\n✨ ўзингизнинг ички ресурсларингизни қайта тиклайсиз\n✨ ҳаётингизни бошқаришни қайта ўрганасиз\n\n👶 Bolalar bilan ham ishlay olaman`;
+            const adminMarkup = { inline_keyboard: [[{ text: lang === 'ru' ? "💬 Связаться с админом" : "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/zilola.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
           } else if (msg.text === t.cats.yoga) {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по йоге, медитации и женской энергии:" : "Yoga, meditatsiya va ayollik energiyasi mutaxassislarimiz:", {
               reply_markup: {
