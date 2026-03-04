@@ -300,7 +300,7 @@ export function setupBot() {
               });
 
               // 2. Notify Admin via Telegram
-              const adminChatId = process.env.ADMIN_CHAT_ID || "6024976451"; 
+              const adminChatId = process.env.ADMIN_CHAT_ID || "83396235"; 
               const sosAlert = `🆘 **YANGI SOS XABAR!**\n\n👤 **Foydalanuvchi:** ${user.firstName || ""} ${user.lastName || ""} (@${user.username || "username_yo'q"})\n🆔 **ID:** ${user.telegramId}\n\n💬 **Xabar:**\n${msg.text}`;
               
               try {
