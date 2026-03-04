@@ -300,18 +300,12 @@ export function setupBot() {
               });
 
               // 2. Notify Admin via Telegram
-              const adminChatId = "6024976451"; // This is a placeholder, usually we'd use an env var
+              const adminChatId = process.env.ADMIN_CHAT_ID || "6024976451"; 
               const sosAlert = `🆘 **YANGI SOS XABAR!**\n\n👤 **Foydalanuvchi:** ${user.firstName || ""} ${user.lastName || ""} (@${user.username || "username_yo'q"})\n🆔 **ID:** ${user.telegramId}\n\n💬 **Xabar:**\n${msg.text}`;
               
               try {
-                // We attempt to send to the designated admin contact if we had their Chat ID
-                // For now, we'll log it and we can also forward it to the admin's username if they have a bot session
                 console.log(`SOS Alert from ${user.username || user.telegramId}: ${msg.text}`);
-                
-                // In a real scenario, you'd have an ADMIN_CHAT_ID env var
-                if (process.env.ADMIN_CHAT_ID) {
-                  await currentBot.sendMessage(process.env.ADMIN_CHAT_ID, sosAlert, { parse_mode: 'Markdown' });
-                }
+                await currentBot.sendMessage(adminChatId, sosAlert, { parse_mode: 'Markdown' });
               } catch (err) {
                 console.error("Failed to notify admin about SOS:", err);
               }
