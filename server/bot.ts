@@ -360,6 +360,7 @@ export function setupBot() {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Zamira Xolbayeva" }],
+                  [{ text: "👤 Amanova Sitora" }],
                   [{ text: "👤 Zilola Azimova" }],
                   [{ text: "👤 Suyunova Muhayyo" }, { text: "👤 Erkinova Sevara" }],
                   [{ text: "👤 Azimova Muxlisa" }, { text: "👤 Mamasharipova Laylo" }],
@@ -404,11 +405,20 @@ export function setupBot() {
             } catch (err) {
               await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
             }
+          } else if (msg.text === "👤 Amanova Sitora") {
+            const caption = `👤 **Amanova Sitora**\nOliy Ma'lumotli Psixolog\n\n🎯 **Mutaxassislik yo'nalishlari:**\n✅ Raqamlar bo'yicha Psixolog (Numerolog)\n✅ Oilaviy munosabatlar\n✅ Sevimli ayol bo'lish sirlari\n\n✨ Insonning tug'ilgan sanasi va raqamlar orqali uning taqdiri, fe'l-atvori hamda hayotiy yo'lini aniqlashda yordam beraman.`;
+            const adminMarkup = { inline_keyboard: [[{ text: lang === 'ru' ? "💬 Связаться с админом" : "💬 Admin bilan bog'lanish", url: "https://t.me/Feruza_PsixologTop" }]] };
+            try {
+              await currentBot.sendPhoto(chatId, "./client/public/images/sitora.jpg", { caption, parse_mode: 'Markdown', reply_markup: adminMarkup });
+            } catch (err) {
+              await currentBot.sendMessage(chatId, caption, { parse_mode: 'Markdown', reply_markup: adminMarkup });
+            }
           } else if (msg.text === t.cats.yoga) {
             await currentBot.sendMessage(chatId, lang === 'ru' ? "Наши специалисты по йоге, медитации и женской энергии:" : "Yoga, meditatsiya va ayollik energiyasi mutaxassislarimiz:", {
               reply_markup: {
                 keyboard: [
                   [{ text: "👤 Zamira Xolbayeva" }],
+                  [{ text: "👤 Amanova Sitora" }],
                   [{ text: "🧘 Yoga Mutaxassisi" }, { text: "👤 Suyunova Muhayyo" }],
                   [{ text: t.return_catalog }]
                 ],
