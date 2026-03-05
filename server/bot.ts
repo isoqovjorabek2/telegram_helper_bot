@@ -556,6 +556,20 @@ export function setupBot() {
                 ]
               }
             });
+          } else if (msg.text === "/start" || msg.text === "🔙 Orqaga" || msg.text === "🔙 Назад") {
+            await storage.updateUser(user.id, { testState: null });
+            const lang = user.languageCode || 'uz';
+            const t = MESSAGES[lang as keyof typeof MESSAGES];
+            await currentBot.sendMessage(chatId, t.welcome, {
+              reply_markup: {
+                keyboard: [
+                  [{ text: t.diagnostics }],
+                  [{ text: t.catalog }, { text: t.courses }],
+                  [{ text: t.about }, { text: t.admin }]
+                ],
+                resize_keyboard: true
+              }
+            });
           } else if (msg.text === t.courses) {
             await currentBot.sendMessage(chatId, t.courses_text, { parse_mode: 'Markdown' });
           } else if (msg.text === "👤 Suyunova Muhayyo") {
