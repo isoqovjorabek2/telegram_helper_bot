@@ -77,10 +77,9 @@ export function registerAudioRoutes(app: Express): void {
 
       // 3. Get conversation history
       const existingMessages = await chatStorage.getMessagesByConversation(conversationId);
-      const chatHistory = existingMessages.map((m) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      }));
+      const chatHistory = existingMessages
+        .filter((m) => m.content != null)
+        .map((m) => ({ role: m.role as "user" | "assistant", content: m.content as string }));
 
       // 4. Set up SSE
       res.setHeader("Content-Type", "text/event-stream");
@@ -144,10 +143,9 @@ export function registerAudioRoutes(app: Express): void {
 
       // Get conversation history
       const existingMessages = await chatStorage.getMessagesByConversation(conversationId);
-      const chatHistory = existingMessages.map((m) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      }));
+      const chatHistory = existingMessages
+        .filter((m) => m.content != null)
+        .map((m) => ({ role: m.role as "user" | "assistant", content: m.content as string }));
 
       // Set up SSE
       res.setHeader("Content-Type", "text/event-stream");

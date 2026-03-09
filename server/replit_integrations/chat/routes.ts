@@ -70,10 +70,9 @@ export function registerChatRoutes(app: Express): void {
 
       // Get conversation history for context
       const messages = await chatStorage.getMessagesByConversation(conversationId);
-      const chatMessages = messages.map((m) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      }));
+      const chatMessagesForApi = messages
+        .filter((m) => m.content != null)
+        .map((m) => ({ role: m.role as "user" | "assistant", content: m.content as string }));
 
       // Set up SSE
       res.setHeader("Content-Type", "text/event-stream");
@@ -83,7 +82,7 @@ export function registerChatRoutes(app: Express): void {
       // Stream response from OpenAI
       const stream = await openai.chat.completions.create({
         model: "gpt-5.1",
-        messages: chatMessages,
+        messages: chatMessagesForApi,
         stream: true,
         max_completion_tokens: 2048,
       });

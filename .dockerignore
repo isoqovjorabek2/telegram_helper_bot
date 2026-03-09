@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+.env
+.env.*
+.local
+.agents
+.config
+attached_assets
+*.log
+.DS_Store
